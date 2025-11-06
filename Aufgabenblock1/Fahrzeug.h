@@ -29,6 +29,8 @@ public:
 	static void vKopf();
 	void vAusgeben() const;
 
+	void vSimulieren();
+
 	Fahrzeug();
 	Fahrzeug(const std::string sName);
 	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);

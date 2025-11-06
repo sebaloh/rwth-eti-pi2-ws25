@@ -16,10 +16,22 @@ void Fahrzeug::vKopf() {
 }
 
 void Fahrzeug::vAusgeben() const {
-	std::cout << std::setiosflags(std::ios::left) << std::setw(4) << p_iID;
-	std::cout << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
-	std::cout << std::setiosflags(std::ios::left) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(24) << p_dMaxGeschwindigkeit;
-	std::cout << std::setiosflags(std::ios::left) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
+	std::cout << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(4) << p_iID;
+	std::cout << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
+	std::cout << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(24) << p_dMaxGeschwindigkeit;
+	std::cout << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
+}
+
+void Fahrzeug::vSimulieren() {
+	double dDeltaZeit = dGlobaleZeit - p_dZeit;
+	double dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
+
+	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
+	if (dDeltaZeit >= 0.5) {
+		p_dGesamtStrecke += dGefahreneStrecke;
+		p_dGesamtZeit += dDeltaZeit;
+		p_dZeit = dGlobaleZeit;
+	}
 }
 
 Fahrzeug::Fahrzeug() :
