@@ -8,6 +8,7 @@
 #include "Fahrzeug.h"
 #include <memory>
 #include <vector>
+#include <limits>
 
 void vAufgabe_1() {
 	Fahrzeug sFahrzeug("statisches_Fahrzeug");
@@ -43,9 +44,57 @@ void vAufgabe_1() {
 	dFahrzeug = nullptr;
 }
 
-int main() {
-	Fahrzeug fahrzeug("Auto", 20.0);
+void vAufgabe_1a() {
+	std::vector<std::unique_ptr<Fahrzeug>> vFahrzeuge;
+
+	std::string sName = "";
+	double dMaxGeschwindigkeit = 0.0;
+
+	for (int i = 0; i < 3; ++i) {
+		std::cout << "--- Eingabe Fahrzeug #" << i + 1 << " ---" << std::endl;
+
+		std::cout << "Name des Fahrzeugs: ";
+		std::getline(std::cin, sName);
+
+		std::cout << "Geschwindigkeit des Fahrzeugs: ";
+		while(!(std::cin >> dMaxGeschwindigkeit)) {
+			std::cout << "Gebe eine gueltige Geschwindigkeit ein: ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		vFahrzeuge.push_back(std::make_unique<Fahrzeug>(sName, dMaxGeschwindigkeit));
+	}
+
 	Fahrzeug::vKopf();
-	fahrzeug.vAusgeben(); std::cout << std::endl;
+	for (const auto& fahrzeug : vFahrzeuge) {
+		fahrzeug->vAusgeben(); std::cout << '\n';
+	}
+
+	std::cout << "---- Simulationsstart ----" << std::endl;
+
+	const double dSimulationsdauer= 5.0;
+	const double dSimulationsschritt = 0.5;
+
+	Fahrzeug::vKopf();
+
+	for (double t = 0.0; t <= dSimulationsdauer; t += dSimulationsschritt) {
+		dGlobaleZeit = t;
+
+		std::cout << "--------------------------- " << t << " ---------------------------" << std::endl;
+
+		for (const auto& fahrzeug : vFahrzeuge) {
+			fahrzeug->vSimulieren();
+			fahrzeug->vAusgeben(); std::cout << '\n';
+		}
+	}
+
+	std::cout << "---- Simulationsende ----" << std::endl;
+}
+
+int main() {
+	vAufgabe_1a();
 	return 0;
 }
