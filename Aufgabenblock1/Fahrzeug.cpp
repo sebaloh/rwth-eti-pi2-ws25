@@ -9,6 +9,18 @@
 
 int Fahrzeug::p_iMaxID = 0;
 
+void Fahrzeug::vKopf() {
+	std::cout  << std::setiosflags(std::ios::left) << std::setw(4) << "ID" << std::setw(16) << "Name" << std::setw(24) << "MaxGeschwindigkeit" << std::setw(16) << "Gesamtstrecke" << std::endl;
+	std::cout << std::setfill('-') << std::setw(60) << "" << std::setfill(' ') << std::endl;
+}
+
+void Fahrzeug::vAusgeben() const {
+	std::cout << std::setiosflags(std::ios::left) << std::setw(4) << p_iID;
+	std::cout << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
+	std::cout << std::setiosflags(std::ios::left) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(24) << p_dMaxGeschwindigkeit;
+	std::cout << std::setiosflags(std::ios::left) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
+}
+
 Fahrzeug::Fahrzeug() :
 	p_sName(""),
 	p_iID(++p_iMaxID),

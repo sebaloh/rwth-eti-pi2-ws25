@@ -10,6 +10,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 class Fahrzeug {
 private:
@@ -23,6 +24,9 @@ private:
 	double p_dGesamtZeit;
 	double p_dZeit;
 public:
+	static void vKopf();
+	void vAusgeben() const;
+
 	Fahrzeug();
 	Fahrzeug(const std::string sName);
 	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);

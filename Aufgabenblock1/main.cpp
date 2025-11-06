@@ -44,6 +44,8 @@ void vAufgabe_1() {
 }
 
 int main() {
-	vAufgabe_1();
+	Fahrzeug fahrzeug("Auto", 20.0);
+	Fahrzeug::vKopf();
+	fahrzeug.vAusgeben(); std::cout << std::endl;
 	return 0;
 }
