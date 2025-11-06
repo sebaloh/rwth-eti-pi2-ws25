@@ -12,6 +12,8 @@
 #include <iostream>
 #include <iomanip>
 
+extern double dGlobaleZeit;
+
 class Fahrzeug {
 private:
 	static int p_iMaxID;

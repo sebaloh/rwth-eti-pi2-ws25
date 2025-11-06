@@ -7,6 +7,7 @@
 
 #include "Fahrzeug.h"
 
+double dGlobaleZeit = 0.0;
 int Fahrzeug::p_iMaxID = 0;
 
 void Fahrzeug::vKopf() {
