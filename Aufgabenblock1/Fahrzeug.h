@@ -17,9 +17,15 @@ private:
 
 	const std::string p_sName;
 	const int p_iID;
+
+	double p_dMaxGeschwindigkeit;
+	double p_dGesamtStrecke;
+	double p_dGesamtZeit;
+	double p_dZeit;
 public:
 	Fahrzeug();
 	Fahrzeug(const std::string sName);
+	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);
 	virtual ~Fahrzeug();
 };
 
