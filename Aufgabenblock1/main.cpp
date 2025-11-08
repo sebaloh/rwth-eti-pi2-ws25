@@ -5,7 +5,8 @@
  *      Author: sebastian
  */
 
-#include "Fahrzeug.h"
+#include "PKW.h"
+#include "Fahrrad.h"
 #include <memory>
 #include <vector>
 #include <limits>
@@ -94,7 +95,40 @@ void vAufgabe_1a() {
 	std::cout << "---- Simulationsende ----" << std::endl;
 }
 
+void vAufgabe_1b() {
+	std::vector<std::unique_ptr<Fahrzeug>> vFahrzeuge;
+
+	vFahrzeuge.push_back(std::make_unique<PKW>("Auto", 160));
+	vFahrzeuge.push_back(std::make_unique<Fahrzeug>("LKW", 80));
+	vFahrzeuge.push_back(std::make_unique<Fahrrad>("Rennrad", 40));
+
+	Fahrzeug::vKopf();
+	for (const auto& fahrzeug : vFahrzeuge) {
+		fahrzeug->vAusgeben(); std::cout << '\n';
+	}
+
+	std::cout << "---- Simulationsstart ----" << std::endl;
+
+	const double dSimulationsdauer= 5.0;
+	const double dSimulationsschritt = 0.5;
+
+	Fahrzeug::vKopf();
+
+	for (double t = 0.0; t <= dSimulationsdauer; t += dSimulationsschritt) {
+		dGlobaleZeit = t;
+
+		std::cout << "--------------------------- " << t << " ---------------------------" << std::endl;
+
+		for (const auto& fahrzeug : vFahrzeuge) {
+			fahrzeug->vSimulieren();
+			fahrzeug->vAusgeben(); std::cout << '\n';
+		}
+	}
+
+	std::cout << "---- Simulationsende ----" << std::endl;
+}
+
 int main() {
-	vAufgabe_1a();
+	vAufgabe_1b();
 	return 0;
 }

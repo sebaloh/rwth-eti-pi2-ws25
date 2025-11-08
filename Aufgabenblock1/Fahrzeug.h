@@ -15,7 +15,7 @@
 extern double dGlobaleZeit;
 
 class Fahrzeug {
-private:
+protected:
 	static int p_iMaxID;
 
 	const std::string p_sName;

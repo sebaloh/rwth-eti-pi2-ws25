@@ -1,4 +1,4 @@
-/*
+ /*
  * Fahrzeug.cpp
  *
  *  Created on: 06.11.2025
@@ -42,7 +42,7 @@ Fahrzeug::Fahrzeug() :
 	p_dGesamtZeit(0.0),
 	p_dZeit(0.0)
 {
-	std::cout << "Fahrzeug \"" << p_sName << "\" #" << p_iID << " erstellt."<< std::endl;
+	std::cout << "Fahrzeug (#" << p_iID << ") \"" << p_sName << "\" erstellt."<< std::endl;
 }
 
 Fahrzeug::Fahrzeug(const std::string sName) :
@@ -53,7 +53,7 @@ Fahrzeug::Fahrzeug(const std::string sName) :
 	p_dGesamtZeit(0.0),
 	p_dZeit(0.0)
 {
-	std::cout << "Fahrzeug \"" << p_sName << "\" #" << p_iID << " erstellt."<< std::endl;
+	std::cout << "Fahrzeug (#" << p_iID << ") \"" << p_sName << "\" erstellt."<< std::endl;
 }
 
 Fahrzeug::Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit) :
@@ -64,9 +64,9 @@ Fahrzeug::Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit) :
 	p_dGesamtZeit(0.0),
 	p_dZeit(0.0)
 {
-	std::cout << "Fahrzeug \"" << p_sName << "\" #" << p_iID << " erstellt."<< std::endl;
+	std::cout << "Fahrzeug (#" << p_iID << ") \"" << p_sName << "\" erstellt."<< std::endl;
 }
 
 Fahrzeug::~Fahrzeug() {
-	std::cout << "Fahrzeug \"" << p_sName << "\" #" << p_iID << " gelöscht."<< std::endl;
+	std::cout << "Fahrzeug (#" << p_iID << ") \"" << p_sName << "\" gelöscht."<< std::endl;
 }
