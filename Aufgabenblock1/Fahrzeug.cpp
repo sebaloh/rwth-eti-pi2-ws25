@@ -46,6 +46,19 @@ bool Fahrzeug::operator<(const Fahrzeug& other) const {
     return this->p_dGesamtStrecke < other.p_dGesamtStrecke;
 }
 
+Fahrzeug& Fahrzeug::operator=(const Fahrzeug& other) {
+    if (this == &other) {
+        return *this;
+    }
+
+    this->p_dMaxGeschwindigkeit = other.p_dMaxGeschwindigkeit;
+    this->p_dGesamtStrecke = other.p_dGesamtStrecke;
+    this->p_dGesamtZeit = other.p_dGesamtZeit;
+    this->p_dZeit = other.p_dZeit;
+
+    return *this;
+}
+
 Fahrzeug::Fahrzeug() :
 	p_sName(""),
 	p_iID(++p_iMaxID),

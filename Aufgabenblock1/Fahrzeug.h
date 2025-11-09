@@ -37,6 +37,9 @@ public:
 
 	bool operator<(const Fahrzeug& other) const;
 
+	Fahrzeug(const Fahrzeug& other) = delete;
+	Fahrzeug& operator=(const Fahrzeug& other);
+
 	Fahrzeug();
 	Fahrzeug(const std::string sName);
 	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);
