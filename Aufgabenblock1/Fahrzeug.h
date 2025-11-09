@@ -28,7 +28,7 @@ protected:
 	double p_dZeit;
 public:
 	static void vKopf();
-	virtual void vAusgeben() const;
+	virtual void vAusgeben(std::ostream& os) const;
 
 	virtual void vSimulieren();
 
@@ -40,5 +40,7 @@ public:
 	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);
 	virtual ~Fahrzeug();
 };
+
+std::ostream& operator<<(std::ostream& os, const Fahrzeug& fahrzeug);
 
 #endif /* FAHRZEUG_H_ */

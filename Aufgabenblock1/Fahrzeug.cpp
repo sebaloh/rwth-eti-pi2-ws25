@@ -15,11 +15,11 @@ void Fahrzeug::vKopf() {
 	std::cout << std::setfill('-') << std::setw(108) << "" << std::setfill(' ') << std::endl;
 }
 
-void Fahrzeug::vAusgeben() const {
-	std::cout << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(4) << p_iID;
-	std::cout << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
-	std::cout << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(24) << p_dMaxGeschwindigkeit;
-	std::cout << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
+void Fahrzeug::vAusgeben(std::ostream& os) const {
+	os << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(4) << p_iID;
+	os << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
+	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(24) << p_dMaxGeschwindigkeit;
+	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
 }
 
 void Fahrzeug::vSimulieren() {
@@ -77,4 +77,9 @@ Fahrzeug::Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit) :
 
 Fahrzeug::~Fahrzeug() {
 	std::cout << "Fahrzeug (#" << p_iID << ") \"" << p_sName << "\" gelöscht."<< std::endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Fahrzeug& fahrzeug) {
+    fahrzeug.vAusgeben(os);
+    return os;
 }

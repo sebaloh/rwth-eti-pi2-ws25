@@ -72,7 +72,7 @@ void vAufgabe_1a() {
 
 	Fahrzeug::vKopf();
 	for (const auto& fahrzeug : vFahrzeuge) {
-		fahrzeug->vAusgeben(); std::cout << '\n';
+		std::cout << *fahrzeug << '\n';
 	}
 
 	std::cout << "---- Simulationsstart ----" << std::endl;
@@ -89,7 +89,7 @@ void vAufgabe_1a() {
 
 		for (const auto& fahrzeug : vFahrzeuge) {
 			fahrzeug->vSimulieren();
-			fahrzeug->vAusgeben(); std::cout << '\n';
+			std::cout << *fahrzeug << '\n';
 		}
 	}
 
@@ -179,7 +179,7 @@ void vAufgabe_2() {
 
 	Fahrzeug::vKopf();
 	for (const auto& fahrzeug : vFahrzeuge) {
-		fahrzeug->vAusgeben(); std::cout << '\n';
+		std::cout << *fahrzeug << '\n';
 	}
 
 	std::cout << "------------------------------------------------------------------------------------------------------------" << std::endl;
@@ -202,7 +202,7 @@ void vAufgabe_2() {
 			} else {
 				fahrzeug->vSimulieren();
 			}
-			fahrzeug->vAusgeben(); std::cout << '\n';
+			std::cout << *fahrzeug << '\n';
 		}
 	}
 

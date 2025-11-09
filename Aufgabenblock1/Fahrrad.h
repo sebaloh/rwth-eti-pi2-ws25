@@ -15,7 +15,7 @@ public:
 	Fahrrad(const std::string sName);
 	Fahrrad(const std::string sName, const double dMaxGeschwindigkeit);
 
-	void vAusgeben() const override;
+	void vAusgeben(std::ostream& os) const override;
 
 	void vSimulieren() override;
 

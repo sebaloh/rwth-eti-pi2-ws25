@@ -20,7 +20,7 @@ public:
 	PKW(const std::string sName, const double dMaxGeschwindigkeit);
 	PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen);
 
-	void vAusgeben() const override;
+	void vAusgeben(std::ostream& os) const override;
 
 	void vSimulieren() override;
 
