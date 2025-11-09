@@ -42,6 +42,10 @@ double Fahrzeug::dGeschwindigkeit() const {
 	return p_dMaxGeschwindigkeit;
 }
 
+bool Fahrzeug::operator<(const Fahrzeug& other) const {
+    return this->p_dGesamtStrecke < other.p_dGesamtStrecke;
+}
+
 Fahrzeug::Fahrzeug() :
 	p_sName(""),
 	p_iID(++p_iMaxID),

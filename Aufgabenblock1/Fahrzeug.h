@@ -35,6 +35,8 @@ public:
 	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
 	virtual double dGeschwindigkeit() const;
 
+	bool operator<(const Fahrzeug& other) const;
+
 	Fahrzeug();
 	Fahrzeug(const std::string sName);
 	Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit);
