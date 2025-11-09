@@ -14,6 +14,12 @@ class Fahrrad: public Fahrzeug {
 public:
 	Fahrrad(const std::string sName);
 	Fahrrad(const std::string sName, const double dMaxGeschwindigkeit);
+
+	void vAusgeben() const override;
+
+	void vSimulieren() override;
+
+	double dGeschwindigkeit() const override;
 };
 
 #endif /* FAHRRAD_H_ */

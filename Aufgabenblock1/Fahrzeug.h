@@ -33,6 +33,7 @@ public:
 	virtual void vSimulieren();
 
 	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
+	virtual double dGeschwindigkeit() const;
 
 	Fahrzeug();
 	Fahrzeug(const std::string sName);

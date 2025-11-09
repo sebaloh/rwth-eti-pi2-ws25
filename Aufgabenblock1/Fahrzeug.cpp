@@ -11,8 +11,8 @@ double dGlobaleZeit = 0.0;
 int Fahrzeug::p_iMaxID = 0;
 
 void Fahrzeug::vKopf() {
-	std::cout  << std::setiosflags(std::ios::left) << std::setw(4) << "ID" << std::setw(16) << "Name" << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) <<  std::setw(24) << "MaxGeschwindigkeit" << std::setw(16) << "Gesamtstrecke" << std::setw(16) << "Gesamtverbrauch" << std::setw(16) << "Tankinhalt" << std::endl;
-	std::cout << std::setfill('-') << std::setw(92) << "" << std::setfill(' ') << std::endl;
+	std::cout  << std::setiosflags(std::ios::left) << std::setw(4) << "ID" << std::setw(16) << "Name" << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) <<  std::setw(24) << "MaxGeschwindigkeit" << std::setw(16) << "Gesamtstrecke" << std::setw(16) << "Gesamtverbrauch" << std::setw(16) << "Tankinhalt" << std::setw(16) << "Geschwindigkeit" << std::endl;
+	std::cout << std::setfill('-') << std::setw(108) << "" << std::setfill(' ') << std::endl;
 }
 
 void Fahrzeug::vAusgeben() const {
@@ -34,9 +34,12 @@ void Fahrzeug::vSimulieren() {
 	}
 }
 
-double Fahrzeug::dTanken(double dMenge)
-{
+double Fahrzeug::dTanken(double dMenge) {
 	return 0.0;
+}
+
+double Fahrzeug::dGeschwindigkeit() const {
+	return p_dMaxGeschwindigkeit;
 }
 
 Fahrzeug::Fahrzeug() :
