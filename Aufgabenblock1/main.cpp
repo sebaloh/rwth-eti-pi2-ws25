@@ -211,7 +211,28 @@ void vAufgabe_2() {
 	std::cout << "------------------------------------------------------------------------------------------------------------" << std::endl;
 }
 
+void vAufgabe_3() {
+	Fahrzeug::vKopf();
+
+	PKW pOriginal("Original", 160.0, 20.0, 60.0);
+	pOriginal.vSimulieren();
+	dGlobaleZeit = 1;
+	pOriginal.vSimulieren();
+	PKW pKopie("Kopie", 100.0, 10.0, 80.0);
+	pKopie = pOriginal;
+	std::cout << pKopie << std::endl;
+
+	PKW pAuto("Auto", 160.0, 20.0, 60.0);
+	Fahrrad fRennrad("Rennrad", 60.0);
+	pAuto.vSimulieren();
+	fRennrad.vSimulieren();
+	if (fRennrad < pAuto) {
+		std::cout << pAuto << std::endl << fRennrad << std::endl;
+		std::cout << "True" << std::endl;
+	}
+}
+
 int main() {
-	vAufgabe_2();
+	vAufgabe_3();
 	return 0;
 }
