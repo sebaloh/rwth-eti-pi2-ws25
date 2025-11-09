@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <limits>
+#include <cmath>
 
 void vAufgabe_1() {
 	Fahrzeug sFahrzeug("statisches_Fahrzeug");
@@ -98,9 +99,83 @@ void vAufgabe_1a() {
 void vAufgabe_2() {
 	std::vector<std::unique_ptr<Fahrzeug>> vFahrzeuge;
 
-	vFahrzeuge.push_back(std::make_unique<PKW>("Auto", 160, 20, 60));
-	vFahrzeuge.push_back(std::make_unique<Fahrzeug>("LKW", 80));
-	vFahrzeuge.push_back(std::make_unique<Fahrrad>("Rennrad", 40));
+	int iAnzahl = 0;
+	int iTanken = 0;
+	int iTyp = 0; //1 = PKW, 2 = Fahrrad
+	std::string sName = "";
+	double dMaxGeschwindigkeit = 0.0;
+	double dVerbrauch = 0.0;
+	double dTankvolumen = 0.0;
+
+	std::cout << "Anzahl der Fahrzeuge: ";
+	while(!(std::cin >> iAnzahl)) {
+		std::cout << "Gebe eine gueltige Zahl ein: ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	std::cout << "Tanken nach Stunden: ";
+	while(!(std::cin >> iTanken)) {
+		std::cout << "Gebe eine gueltige Zahl ein: ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+	for (int i = 0; i < iAnzahl; ++i) {
+		std::cout << "--- Eingabe Fahrzeug #" << i + 1 << " ---" << std::endl;
+
+		std::cout << "Fahrzeugtyp (1 = PKW, 2 = Fahrrad): ";
+		while(!(std::cin >> iTyp) || !((iTyp == 1) || (iTyp == 2))) {
+			std::cout << "Gebe einen gueltigen Typ ein: ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		std::cout << "Name des Fahrzeugs: ";
+		std::getline(std::cin, sName);
+
+		std::cout << "Geschwindigkeit des Fahrzeugs: ";
+		while(!(std::cin >> dMaxGeschwindigkeit)) {
+			std::cout << "Gebe eine gueltige Geschwindigkeit ein: ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+		if (iTyp == 1) {
+			std::cout << "Verbrauch des Fahrzeugs: ";
+			while(!(std::cin >> dVerbrauch)) {
+				std::cout << "Gebe einen gueltigen Verbrauch ein: ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+			std::cout << "Tankvolumen des Fahrzeugs: ";
+			while(!(std::cin >> dTankvolumen)) {
+				std::cout << "Gebe ein gueltiges Tankvolumen ein: ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			}
+
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+
+		if (iTyp == 1){
+			vFahrzeuge.push_back(std::make_unique<PKW>(sName, dMaxGeschwindigkeit, dVerbrauch, dTankvolumen));
+		} else {
+
+			vFahrzeuge.push_back(std::make_unique<Fahrrad>(sName, dMaxGeschwindigkeit));
+		}
+	}
 
 	Fahrzeug::vKopf();
 	for (const auto& fahrzeug : vFahrzeuge) {
@@ -122,7 +197,11 @@ void vAufgabe_2() {
 		std::cout << "--------------------------------------------------- " << t << " ---------------------------------------------------" << std::endl;
 
 		for (const auto& fahrzeug : vFahrzeuge) {
-			fahrzeug->vSimulieren();
+			if (std::fabs(t - iTanken) < 0.2 && std::fabs(t - iTanken) > -0.2) {
+				fahrzeug->dTanken();
+			} else {
+				fahrzeug->vSimulieren();
+			}
 			fahrzeug->vAusgeben(); std::cout << '\n';
 		}
 	}
