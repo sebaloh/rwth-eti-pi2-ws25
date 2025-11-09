@@ -11,6 +11,7 @@
 #include <string>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 extern double dGlobaleZeit;
 
@@ -27,9 +28,11 @@ protected:
 	double p_dZeit;
 public:
 	static void vKopf();
-	void vAusgeben() const;
+	virtual void vAusgeben() const;
 
-	void vSimulieren();
+	virtual void vSimulieren();
+
+	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
 
 	Fahrzeug();
 	Fahrzeug(const std::string sName);

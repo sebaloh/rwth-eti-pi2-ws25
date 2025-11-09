@@ -95,10 +95,10 @@ void vAufgabe_1a() {
 	std::cout << "---- Simulationsende ----" << std::endl;
 }
 
-void vAufgabe_1b() {
+void vAufgabe_2() {
 	std::vector<std::unique_ptr<Fahrzeug>> vFahrzeuge;
 
-	vFahrzeuge.push_back(std::make_unique<PKW>("Auto", 160));
+	vFahrzeuge.push_back(std::make_unique<PKW>("Auto", 160, 20, 60));
 	vFahrzeuge.push_back(std::make_unique<Fahrzeug>("LKW", 80));
 	vFahrzeuge.push_back(std::make_unique<Fahrrad>("Rennrad", 40));
 
@@ -107,7 +107,9 @@ void vAufgabe_1b() {
 		fahrzeug->vAusgeben(); std::cout << '\n';
 	}
 
-	std::cout << "---- Simulationsstart ----" << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "-                                     Simulationsstart                                     -" << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
 
 	const double dSimulationsdauer= 5.0;
 	const double dSimulationsschritt = 0.5;
@@ -117,7 +119,7 @@ void vAufgabe_1b() {
 	for (double t = 0.0; t <= dSimulationsdauer; t += dSimulationsschritt) {
 		dGlobaleZeit = t;
 
-		std::cout << "--------------------------- " << t << " ---------------------------" << std::endl;
+		std::cout << "------------------------------------------- " << t << " -------------------------------------------" << std::endl;
 
 		for (const auto& fahrzeug : vFahrzeuge) {
 			fahrzeug->vSimulieren();
@@ -125,10 +127,12 @@ void vAufgabe_1b() {
 		}
 	}
 
-	std::cout << "---- Simulationsende ----" << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
+	std::cout << "-                                     Simulationsende                                      -" << std::endl;
+	std::cout << "--------------------------------------------------------------------------------------------" << std::endl;
 }
 
 int main() {
-	vAufgabe_1b();
+	vAufgabe_2();
 	return 0;
 }
