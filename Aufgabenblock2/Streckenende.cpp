@@ -11,6 +11,7 @@
 
 void Streckenende::vBearbeiten() {
 	std::cout << "Fahrzeug (#" << p_pFahrzeug.iID() << ") \"" << p_pFahrzeug.sName() << "\" hat Ende vom Weg (#" << p_pWeg.iID() << ") \"" << p_pWeg.sName() << "\" erreicht." << std::endl;
+	p_pWeg.pAbgabe(p_pFahrzeug);
 }
 
 Streckenende::Streckenende(Fahrzeug& fahrzeug, Weg& weg) :

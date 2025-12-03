@@ -18,8 +18,10 @@ void Weg::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(12) << p_dLaenge;
 
 	os << std::setw(4) << "( ";
-	for (auto& fahrzeug : p_pFahrzeuge) {
-		os << fahrzeug->sName() << " ";
+	for (const auto& fahrzeug : p_pFahrzeuge) {
+		if (fahrzeug) {
+			os << fahrzeug->sName() << " ";
+		}
 	}
 	os << ")";
 }
@@ -29,6 +31,7 @@ double Weg::dLaenge() const {
 }
 
 void Weg::vSimulieren() {
+	p_pFahrzeuge.vAktualisieren();
 	for (auto& fahrzeug : p_pFahrzeuge) {
 		try {
 			fahrzeug->vSimulieren();
@@ -38,6 +41,7 @@ void Weg::vSimulieren() {
 			ausnahme.vBearbeiten();
 		}
 	}
+	p_pFahrzeuge.vAktualisieren();
 }
 
 void Weg::vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug) {
@@ -47,7 +51,18 @@ void Weg::vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug) {
 
 void Weg::vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit) {
 	pFahrzeug->vNeueStrecke(*this, dStartzeit);
-	p_pFahrzeuge.push_back(std::move(pFahrzeug));
+	p_pFahrzeuge.push_front(std::move(pFahrzeug));
+}
+
+std::unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& fahrzeug) {
+	for (auto it = p_pFahrzeuge.begin(); it != p_pFahrzeuge.end(); ++it) {
+		if (it->get() && **it == fahrzeug) {
+			std::unique_ptr<Fahrzeug> pTemp = std::move(*it);
+			p_pFahrzeuge.erase(it);
+			return pTemp;
+		}
+	}
+	return nullptr;
 }
 
 double Weg::getTempolimit() const {

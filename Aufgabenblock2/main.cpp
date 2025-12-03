@@ -9,12 +9,14 @@
 #include "Fahrrad.h"
 #include "Weg.h"
 #include "SimuClient.h"
+#include "vertagt_liste.h"
 #include <memory>
 #include <vector>
 #include <limits>
 #include <cmath>
 #include <iomanip>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 extern double dGlobaleZeit;
@@ -357,7 +359,6 @@ void vAufgabe_6() {
 		bZeichneFahrrad("Rad", "Hinweg", dRelPosRad, pRad->dGeschwindigkeit());
 		bZeichnePKW("LKW", "Rueckweg", dRelPosLKW, pLKW->dGeschwindigkeit(), dynamic_cast<PKW*>(pLKW)->dTankinhalt());
 
-		Weg::vKopf();
 		std::cout << hinweg << std::endl;
 		std::cout << rueckweg << std::endl;
 
@@ -367,6 +368,53 @@ void vAufgabe_6() {
 	std::cout << "Druecke Enter zum Beenden..." << std::endl;
 	std::cin.get();
 	vBeendeGrafik();
+}
+
+void vAufgabe_6a() {
+	vertagt::VListe<int> liste;
+	static std::mt19937 device(0);
+	std::uniform_int_distribution<int> dist(1, 10);
+
+	for (int i = 0; i < 10; ++i) {
+		liste.push_back(dist(device));
+	}
+	liste.vAktualisieren();
+
+	std::cout << "Liste: ";
+	for (auto it = liste.begin(); it != liste.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+
+	for (auto it = liste.begin(); it != liste.end(); ++it) {
+		if (*it > 5) {
+			liste.erase(it);
+		}
+	}
+
+	std::cout << "Liste nach erase (vor vAktualisieren): ";
+	for (auto it = liste.begin(); it != liste.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+
+	liste.vAktualisieren();
+
+	std::cout << "Liste nach vAktualisieren: ";
+	for (auto it = liste.begin(); it != liste.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+
+	liste.push_front(dist(device));
+	liste.push_back(dist(device));
+	liste.vAktualisieren();
+
+	std::cout << "Liste nach push_front und push_back: ";
+	for (auto it = liste.begin(); it != liste.end(); ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
 }
 
 int main() {

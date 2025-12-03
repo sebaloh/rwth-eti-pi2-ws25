@@ -11,6 +11,7 @@
 #include "Simulationsobjekt.h"
 #include "Fahrausnahme.h"
 #include "Tempolimit.h"
+#include "vertagt_liste.h"
 #include <list>
 #include <memory>
 #include <limits>
@@ -20,7 +21,7 @@ class Fahrzeug;
 class Weg : public Simulationsobjekt {
 private:
 	double p_dLaenge;
-	std::list<std::unique_ptr<Fahrzeug>> p_pFahrzeuge;
+	vertagt::VListe<std::unique_ptr<Fahrzeug>> p_pFahrzeuge;
 	Tempolimit p_eTempolimit;
 public:
 	static void vKopf();
@@ -32,6 +33,8 @@ public:
 
 	void vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug);
 	void vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit);
+	std::unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& fahrzeug);
+	
 	double getTempolimit() const;
 
 	Weg(std::string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::Autobahn);
