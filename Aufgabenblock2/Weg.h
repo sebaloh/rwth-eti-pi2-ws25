@@ -29,13 +29,13 @@ public:
 
 	void vSimulieren() override;
 
-	double dLaenge() const;
+	// Getter
+	double getLaenge() const;
+	double getTempolimit() const;
 
 	void vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug);
 	void vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit);
 	std::unique_ptr<Fahrzeug> pAbgabe(const Fahrzeug& fahrzeug);
-	
-	double getTempolimit() const;
 
 	Weg(std::string sName, double dLaenge, Tempolimit eTempolimit = Tempolimit::Autobahn);
 };

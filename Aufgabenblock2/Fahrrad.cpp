@@ -11,7 +11,7 @@ void Fahrrad::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << "";
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << "";
-	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << dGeschwindigkeit();
+	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << getGeschwindigkeit();
 }
 
 void Fahrrad::vSimulieren() {
@@ -24,10 +24,10 @@ void Fahrrad::vSimulieren() {
 		if (p_pVerhalten) {
 			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
 		} else {
-			dGefahreneStrecke = dGeschwindigkeit() * dDeltaZeit;
+			dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 		}
 
-		dGefahreneStrecke = dGeschwindigkeit() * dDeltaZeit;
+		dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 
 		p_dGesamtStrecke += dGefahreneStrecke;
 		p_dAbschnittStrecke += dGefahreneStrecke;
@@ -37,10 +37,10 @@ void Fahrrad::vSimulieren() {
 }
 
 void Fahrrad::vZeichnen(const Weg& weg) const {
-	bZeichneFahrrad(sName(), weg.sName(), dAbschnittStrecke() / weg.dLaenge(), dGeschwindigkeit());
+	bZeichneFahrrad(getName(), weg.getName(), getAbschnittStrecke() / weg.getLaenge(), getGeschwindigkeit());
 }
 
-double Fahrrad::dGeschwindigkeit() const {
+double Fahrrad::getGeschwindigkeit() const {
 	double dTatsaechlicheGeschwindigkeit = p_dMaxGeschwindigkeit * (1.0 - (p_dGesamtStrecke / 200.0));
 	return dTatsaechlicheGeschwindigkeit < 12.0 ? 12.0 : dTatsaechlicheGeschwindigkeit;
 }

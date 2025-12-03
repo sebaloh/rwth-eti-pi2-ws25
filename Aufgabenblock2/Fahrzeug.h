@@ -29,13 +29,15 @@ public:
 	virtual void vSimulieren() override;
 	virtual void vZeichnen(const Weg& weg) const;
 
-	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
-	virtual double dGeschwindigkeit() const;
+	// Getter
+	virtual double getGeschwindigkeit() const;
+	double getAbschnittStrecke() const;
 
+	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
 	void vNeueStrecke(Weg& weg);
 	void vNeueStrecke(Weg& weg, double dStartzeit);
-	double dAbschnittStrecke() const;
 
+	// Vergleichsoperator (nur Gesamtstrecke)
 	bool operator<(const Fahrzeug& other) const;
 
 	Fahrzeug(const std::string sName);

@@ -23,10 +23,12 @@ public:
 	void vSimulieren() override;
 	void vZeichnen(const Weg& weg) const override;
 
+	// Getter
+	double getTankinhalt() const;
+
 	double dTanken(double dMenge = std::numeric_limits<double>::infinity()) override;
 
-	double dTankinhalt() const;
-
+	PKW(const std::string sName, const double dMaxGeschwindigkeit);
 	PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen);
 };
 

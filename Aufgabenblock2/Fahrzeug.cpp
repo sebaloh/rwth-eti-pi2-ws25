@@ -38,12 +38,12 @@ void Fahrzeug::vZeichnen(const Weg& weg) const {
 
 }
 
-double Fahrzeug::dTanken(double dMenge) {
-	return 0.0;
+double Fahrzeug::getGeschwindigkeit() const {
+	return p_dMaxGeschwindigkeit;
 }
 
-double Fahrzeug::dGeschwindigkeit() const {
-	return p_dMaxGeschwindigkeit;
+double Fahrzeug::getAbschnittStrecke() const {
+    return p_dAbschnittStrecke;
 }
 
 void Fahrzeug::vNeueStrecke(Weg& weg) {
@@ -51,13 +51,13 @@ void Fahrzeug::vNeueStrecke(Weg& weg) {
     p_dAbschnittStrecke = 0.0;
 }
 
+double Fahrzeug::dTanken(double dMenge) {
+	return 0.0;
+}
+
 void Fahrzeug::vNeueStrecke(Weg& weg, double dStartzeit) {
 	p_pVerhalten = std::make_unique<Parken>(weg, dStartzeit);
 	p_dAbschnittStrecke = 0.0;
-}
-
-double Fahrzeug::dAbschnittStrecke() const {
-    return p_dAbschnittStrecke;
 }
 
 bool Fahrzeug::operator<(const Fahrzeug& other) const {

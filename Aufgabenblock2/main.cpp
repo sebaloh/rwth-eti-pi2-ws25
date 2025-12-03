@@ -351,13 +351,13 @@ void vAufgabe_6() {
 		hinweg.vSimulieren();
 		rueckweg.vSimulieren();
 
-		double dRelPosPKW = pPKW->dAbschnittStrecke() / 500.0;
-		double dRelPosRad = pRad->dAbschnittStrecke() / 500.0;
-		double dRelPosLKW = pLKW->dAbschnittStrecke() / 500.0;
+		double dRelPosPKW = pPKW->getAbschnittStrecke() / 500.0;
+		double dRelPosRad = pRad->getAbschnittStrecke() / 500.0;
+		double dRelPosLKW = pLKW->getAbschnittStrecke() / 500.0;
 
-		bZeichnePKW("PKW", "Hinweg", dRelPosPKW, pPKW->dGeschwindigkeit(), dynamic_cast<PKW*>(pPKW)->dTankinhalt());
-		bZeichneFahrrad("Rad", "Hinweg", dRelPosRad, pRad->dGeschwindigkeit());
-		bZeichnePKW("LKW", "Rueckweg", dRelPosLKW, pLKW->dGeschwindigkeit(), dynamic_cast<PKW*>(pLKW)->dTankinhalt());
+		bZeichnePKW("PKW", "Hinweg", dRelPosPKW, pPKW->getGeschwindigkeit(), dynamic_cast<PKW*>(pPKW)->getTankinhalt());
+		bZeichneFahrrad("Rad", "Hinweg", dRelPosRad, pRad->getGeschwindigkeit());
+		bZeichnePKW("LKW", "Rueckweg", dRelPosLKW, pLKW->getGeschwindigkeit(), dynamic_cast<PKW*>(pLKW)->getTankinhalt());
 
 		std::cout << hinweg << std::endl;
 		std::cout << rueckweg << std::endl;
@@ -417,7 +417,21 @@ void vAufgabe_6a() {
 	std::cout << std::endl;
 }
 
+void vAufgabe_AB2() {
+	Weg A31 ("A31", 1000.0, Tempolimit::Autobahn);
+	std::unique_ptr<Fahrzeug> pPKW = std::make_unique<PKW>("pPKW", 160.0, 15.0, 80.0);
+	A31.vAnnahme(std::move(pPKW), 3.0);
+
+	double dTakt = 0.4;
+	double dDauer = 10.0;
+
+	for (dGlobaleZeit = 0.0; dGlobaleZeit < dDauer; dGlobaleZeit += dTakt) {
+		A31.vSimulieren();
+		std::cout << A31 << std::endl;
+	}
+}
+
 int main() {
-	vAufgabe_6();
+	vAufgabe_AB2();
 	return 0;
 }

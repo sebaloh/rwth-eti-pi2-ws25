@@ -11,7 +11,7 @@ void PKW::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke / 100.0 * p_dVerbrauch;
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dTankinhalt;
-	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << dGeschwindigkeit();
+	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << getGeschwindigkeit();
 }
 
 void PKW::vSimulieren() {
@@ -49,7 +49,11 @@ void PKW::vSimulieren() {
 }
 
 void PKW::vZeichnen(const Weg& weg) const {
-	bZeichnePKW(sName(), weg.sName(), dAbschnittStrecke() / weg.dLaenge(), dGeschwindigkeit(), p_dTankinhalt);
+	bZeichnePKW(getName(), weg.getName(), getAbschnittStrecke() / weg.getLaenge(), getGeschwindigkeit(), getTankinhalt());
+}
+
+double PKW::getTankinhalt() const {
+	return p_dTankinhalt;
 }
 
 double PKW::dTanken(double dMenge) {
@@ -59,8 +63,10 @@ double PKW::dTanken(double dMenge) {
 	return dEchteMenge;
 }
 
-double PKW::dTankinhalt() const {
-	return p_dTankinhalt;
+PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit) :
+	Fahrzeug(sName, dMaxGeschwindigkeit)
+{
+
 }
 
 PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen) :

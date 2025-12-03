@@ -22,11 +22,11 @@ void Simulationsobjekt::vAusgeben(std::ostream& os) const {
 
 
 
-std::string Simulationsobjekt::sName() const {
+std::string Simulationsobjekt::getName() const {
 	return p_sName;
 }
 
-int Simulationsobjekt::iID() const {
+int Simulationsobjekt::getID() const {
 	return p_iID;
 }
 
@@ -67,5 +67,5 @@ Simulationsobjekt::~Simulationsobjekt() {
 
 std::ostream& operator<<(std::ostream& os, const Simulationsobjekt& simulationsobjekt) {
 	simulationsobjekt.vAusgeben(os);
-    return os;
+	return os;
 }

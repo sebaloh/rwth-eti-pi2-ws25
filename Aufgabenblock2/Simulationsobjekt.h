@@ -25,13 +25,20 @@ public:
 	static void vKopf();
 	virtual void vAusgeben(std::ostream& os) const;
 
+	// Reine virtuelle Simulationsmethode
 	virtual void vSimulieren() = 0;
 
-	std::string sName() const;
-	int iID() const;
+	// Getter
+	std::string getName() const;
+	int getID() const;
 
+	// Kopier-Konstruktor
 	Simulationsobjekt(const Simulationsobjekt& other) = delete;
+
+	// Zuweisungsoperator
 	Simulationsobjekt& operator=(const Simulationsobjekt& other);
+
+	// Vergleichsoperator (nach ID)
 	bool operator==(const Simulationsobjekt& other) const;
 
 	Simulationsobjekt();
@@ -39,6 +46,7 @@ public:
 	virtual ~Simulationsobjekt();
 };
 
+// Ausgabeoperator
 std::ostream& operator<<(std::ostream& os, const Simulationsobjekt& simulationsobjekt);
 
 #endif /* SIMULATIONSOBJEKT_H_ */

@@ -16,8 +16,8 @@ class Weg;
 
 class Fahrausnahme : public std::exception {
 protected:
-	Fahrzeug& p_pFahrzeug;
-	Weg& p_pWeg;
+	Fahrzeug& p_Fahrzeug;
+	Weg& p_Weg;
 public:
 	virtual void vBearbeiten() = 0;
 

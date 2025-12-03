@@ -19,7 +19,8 @@ public:
 	void vSimulieren() override;
 	void vZeichnen(const Weg& weg) const override;
 
-	double dGeschwindigkeit() const override;
+	// Getter (nicht gleich p_dMaxGeschwindigkeit)
+	double getGeschwindigkeit() const override;
 
 	Fahrrad(const std::string sName, const double dMaxGeschwindigkeit);
 };

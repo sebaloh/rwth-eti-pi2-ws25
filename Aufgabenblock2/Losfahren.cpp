@@ -10,10 +10,10 @@
 #include "Weg.h"
 
 void Losfahren::vBearbeiten() {
-	std::cout << "Fahrzeug (#" << p_pFahrzeug.iID() << ") \"" << p_pFahrzeug.sName() << "\" ist auf dem Weg (#" << p_pWeg.iID() << ") \"" << p_pWeg.sName() << "\" gestartet." << std::endl;
-	std::unique_ptr<Fahrzeug> pFahrzeug = p_pWeg.pAbgabe(p_pFahrzeug);
+	std::cout << "Fahrzeug (#" << p_Fahrzeug.getID() << ") \"" << p_Fahrzeug.getName() << "\" ist auf dem Weg (#" << p_Weg.getID() << ") \"" << p_Weg.getName() << "\" gestartet." << std::endl;
+	std::unique_ptr<Fahrzeug> pFahrzeug = p_Weg.pAbgabe(p_Fahrzeug);
 	if (pFahrzeug) {
-		p_pWeg.vAnnahme(std::move(pFahrzeug));
+		p_Weg.vAnnahme(std::move(pFahrzeug));
 	}
 }
 

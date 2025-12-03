@@ -10,8 +10,8 @@
 #include "Weg.h"
 
 void Streckenende::vBearbeiten() {
-	std::cout << "Fahrzeug (#" << p_pFahrzeug.iID() << ") \"" << p_pFahrzeug.sName() << "\" hat Ende vom Weg (#" << p_pWeg.iID() << ") \"" << p_pWeg.sName() << "\" erreicht." << std::endl;
-	p_pWeg.pAbgabe(p_pFahrzeug);
+	std::cout << "Fahrzeug (#" << p_Fahrzeug.getID() << ") \"" << p_Fahrzeug.getName() << "\" hat Ende vom Weg (#" << p_Weg.getID() << ") \"" << p_Weg.getName() << "\" erreicht." << std::endl;
+	p_Weg.pAbgabe(p_Fahrzeug);
 }
 
 Streckenende::Streckenende(Fahrzeug& fahrzeug, Weg& weg) :

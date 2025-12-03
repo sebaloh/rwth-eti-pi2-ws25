@@ -17,12 +17,13 @@ double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall) {
     } else {
 		if (!p_bGestartet) {
             p_bGestartet = true;
+            std::cout << dGlobaleZeit << std::endl;
             throw Losfahren(aFzg, p_Weg);
         }
 
-        double dGeschwindigkeit = std::min(aFzg.dGeschwindigkeit(), p_Weg.getTempolimit());
+        double dGeschwindigkeit = std::min(aFzg.getGeschwindigkeit(), p_Weg.getTempolimit());
         double dMoeglicheStrecke = dGeschwindigkeit * dZeitIntervall;
-        double dRestStrecke = p_Weg.dLaenge() - aFzg.dAbschnittStrecke();
+        double dRestStrecke = p_Weg.getLaenge() - aFzg.getAbschnittStrecke();
 
 		if (dRestStrecke <= 0.0) {
 			throw Streckenende(aFzg, p_Weg);

@@ -20,14 +20,27 @@ void Weg::vAusgeben(std::ostream& os) const {
 	os << std::setw(4) << "( ";
 	for (const auto& fahrzeug : p_pFahrzeuge) {
 		if (fahrzeug) {
-			os << fahrzeug->sName() << " ";
+			os << fahrzeug->getName() << " ";
 		}
 	}
 	os << ")";
 }
 
-double Weg::dLaenge() const {
+double Weg::getLaenge() const {
 	return p_dLaenge;
+}
+
+double Weg::getTempolimit() const {
+	switch (p_eTempolimit) {
+		case Tempolimit::Innerorts:
+			return 50.0;
+		case Tempolimit::Landstrasse:
+			return 100.0;
+		case Tempolimit::Autobahn:
+			return static_cast<double>(std::numeric_limits<int>::max());
+		default:
+			return 0.0;
+	}
 }
 
 void Weg::vSimulieren() {
@@ -63,19 +76,6 @@ std::unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& fahrzeug) {
 		}
 	}
 	return nullptr;
-}
-
-double Weg::getTempolimit() const {
-	switch (p_eTempolimit) {
-		case Tempolimit::Innerorts:
-			return 50.0;
-		case Tempolimit::Landstrasse:
-			return 100.0;
-		case Tempolimit::Autobahn:
-			return static_cast<double>(std::numeric_limits<int>::max());
-		default:
-			return 0.0;
-	}
 }
 
 Weg::Weg(std::string sName, double dLaenge, Tempolimit eTempolimit) :
