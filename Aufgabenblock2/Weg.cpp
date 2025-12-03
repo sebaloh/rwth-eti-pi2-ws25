@@ -32,6 +32,7 @@ void Weg::vSimulieren() {
 	for (auto& fahrzeug : p_pFahrzeuge) {
 		try {
 			fahrzeug->vSimulieren();
+			fahrzeug->vZeichnen(*this);
 		}
 		catch (Fahrausnahme& ausnahme) {
 			ausnahme.vBearbeiten();

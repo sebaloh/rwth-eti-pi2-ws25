@@ -34,6 +34,10 @@ void Fahrzeug::vSimulieren() {
 	}
 }
 
+void Fahrzeug::vZeichnen(const Weg& weg) const {
+
+}
+
 double Fahrzeug::dTanken(double dMenge) {
 	return 0.0;
 }

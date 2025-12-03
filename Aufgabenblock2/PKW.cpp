@@ -6,7 +6,6 @@
  */
 
 #include "PKW.h"
-#include "Verhalten.h"
 
 void PKW::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
@@ -49,11 +48,19 @@ void PKW::vSimulieren() {
 	}
 }
 
+void PKW::vZeichnen(const Weg& weg) const {
+	bZeichnePKW(sName(), weg.sName(), dAbschnittStrecke() / weg.dLaenge(), dGeschwindigkeit(), p_dTankinhalt);
+}
+
 double PKW::dTanken(double dMenge) {
 	double dMaxMenge = p_dTankvolumen - p_dTankinhalt;
 	double dEchteMenge = dMenge > dMaxMenge ? dMaxMenge : dMenge;
 	p_dTankinhalt += dEchteMenge;
 	return dEchteMenge;
+}
+
+double PKW::dTankinhalt() const {
+	return p_dTankinhalt;
 }
 
 PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen) :

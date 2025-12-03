@@ -8,6 +8,7 @@
 #include "PKW.h"
 #include "Fahrrad.h"
 #include "Weg.h"
+#include "SimuClient.h"
 #include <memory>
 #include <vector>
 #include <limits>
@@ -322,40 +323,50 @@ void vAufgabe_5() {
 }
 
 void vAufgabe_6() {
+	bInitialisiereGrafik(800, 500);
+	int koordinaten[] = {700, 250, 100, 250};
+	bZeichneStrasse("Hinweg", "Rueckweg", 500, 2, koordinaten);
 
-	Weg innerortsWeg("Hauptstrasse", 50.0, Tempolimit::Innerorts);
-	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 10.0, 80.0);
+	Weg hinweg("Hinweg", 500.0, Tempolimit::Landstrasse);
+	Weg rueckweg("Rueckweg", 500.0, Tempolimit::Landstrasse);
+
+	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 15.0, 80.0);
 	std::unique_ptr<Fahrzeug> rad = std::make_unique<Fahrrad>("Rad", 25.0);
-	std::unique_ptr<Fahrzeug> pPKW = std::make_unique<PKW>("pPKW", 180.0, 7.0, 50.0);
+	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 20.0, 120.0);
 
-	Weg autobahnWeg("A31", 200.0, Tempolimit::Autobahn);
-	std::unique_ptr<Fahrzeug> pkw2 = std::make_unique<PKW>("PKW2", 240.0, 20.0, 80.0);
-	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 30.0, 150.0);
-	std::unique_ptr<Fahrzeug> pLKW = std::make_unique<PKW>("pLKW", 80.0, 25.0, 120.0);
+	Fahrzeug* pPKW = pkw.get();
+	Fahrzeug* pRad = rad.get();
+	Fahrzeug* pLKW = lkw.get();
 
-	innerortsWeg.vAnnahme(std::move(pkw));
-	innerortsWeg.vAnnahme(std::move(rad));
-	innerortsWeg.vAnnahme(std::move(pPKW), 2.0);
-
-	autobahnWeg.vAnnahme(std::move(pkw2));
-	autobahnWeg.vAnnahme(std::move(lkw));
-	autobahnWeg.vAnnahme(std::move(pLKW), 3.0);
+	hinweg.vAnnahme(std::move(pkw));
+	hinweg.vAnnahme(std::move(rad));
+	rueckweg.vAnnahme(std::move(lkw));
 
 	double dTakt = 0.5;
 	double dDauer = 10.0;
 
-	Weg::vKopf();
-	std::cout << innerortsWeg << std::endl;
-	std::cout << autobahnWeg << std::endl;
-
 	for (dGlobaleZeit = 0.0; dGlobaleZeit < dDauer; dGlobaleZeit += dTakt) {
-		innerortsWeg.vSimulieren();
-		autobahnWeg.vSimulieren();
+		hinweg.vSimulieren();
+		rueckweg.vSimulieren();
+
+		double dRelPosPKW = pPKW->dAbschnittStrecke() / 500.0;
+		double dRelPosRad = pRad->dAbschnittStrecke() / 500.0;
+		double dRelPosLKW = pLKW->dAbschnittStrecke() / 500.0;
+
+		bZeichnePKW("PKW", "Hinweg", dRelPosPKW, pPKW->dGeschwindigkeit(), dynamic_cast<PKW*>(pPKW)->dTankinhalt());
+		bZeichneFahrrad("Rad", "Hinweg", dRelPosRad, pRad->dGeschwindigkeit());
+		bZeichnePKW("LKW", "Rueckweg", dRelPosLKW, pLKW->dGeschwindigkeit(), dynamic_cast<PKW*>(pLKW)->dTankinhalt());
 
 		Weg::vKopf();
-		std::cout << innerortsWeg << std::endl;
-		std::cout << autobahnWeg << std::endl;
+		std::cout << hinweg << std::endl;
+		std::cout << rueckweg << std::endl;
+
+		vSleep(100);
 	}
+
+	std::cout << "Druecke Enter zum Beenden..." << std::endl;
+	std::cin.get();
+	vBeendeGrafik();
 }
 
 int main() {

@@ -9,6 +9,7 @@
 #define FAHRZEUG_H_
 
 #include "Simulationsobjekt.h"
+#include "SimuClient.h"
 #include <limits>
 #include <memory>
 
@@ -26,6 +27,7 @@ public:
 	virtual void vAusgeben(std::ostream& os) const override;
 
 	virtual void vSimulieren() override;
+	virtual void vZeichnen(const Weg& weg) const;
 
 	virtual double dTanken(double dMenge = std::numeric_limits<double>::infinity());
 	virtual double dGeschwindigkeit() const;

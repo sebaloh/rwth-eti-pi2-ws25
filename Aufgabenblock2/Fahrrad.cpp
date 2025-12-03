@@ -6,7 +6,6 @@
  */
 
 #include "Fahrrad.h"
-#include "Verhalten.h"
 
 void Fahrrad::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
@@ -35,6 +34,10 @@ void Fahrrad::vSimulieren() {
 		p_dGesamtZeit += dDeltaZeit;
 		p_dZeit = dGlobaleZeit;
 	}
+}
+
+void Fahrrad::vZeichnen(const Weg& weg) const {
+	bZeichneFahrrad(sName(), weg.sName(), dAbschnittStrecke() / weg.dLaenge(), dGeschwindigkeit());
 }
 
 double Fahrrad::dGeschwindigkeit() const {

@@ -9,12 +9,15 @@
 #define FAHRRAD_H_
 
 #include "Fahrzeug.h"
+#include "Verhalten.h"
+#include "Weg.h"
 
 class Fahrrad : public Fahrzeug {
 public:
 	void vAusgeben(std::ostream& os) const override;
 
 	void vSimulieren() override;
+	void vZeichnen(const Weg& weg) const override;
 
 	double dGeschwindigkeit() const override;
 
