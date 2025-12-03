@@ -225,9 +225,9 @@ void vAufgabe_3() {
 	pOriginal.vSimulieren();
 	dGlobaleZeit = 1;
 	pOriginal.vSimulieren();
-	PKW pKopie("Kopie", 100.0, 10.0, 80.0);
+	/*PKW pKopie("Kopie", 100.0, 10.0, 80.0);
 	pKopie = pOriginal;
-	std::cout << pKopie << std::endl;
+	std::cout << pKopie << std::endl;*/
 
 	PKW pAuto("Auto", 160.0, 20.0, 60.0);
 	Fahrrad fRennrad("Rennrad", 60.0);
@@ -295,7 +295,34 @@ void vAufgabe_4() {
 	}
 }
 
+void vAufgabe_5() {
+	Weg bundesstrasse ("B70", 100.0, Tempolimit::Landstrasse);
+
+	std::unique_ptr<Fahrzeug> rennrad = std::make_unique<Fahrrad>("Rennrad", 40.0);
+	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 10.0, 60.0);
+	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 20.0, 100.0);
+	std::unique_ptr<Fahrzeug> parkenderPKW = std::make_unique<PKW>("parkenderPKW", 80.0, 20.0, 100.0);
+
+	Weg::vKopf();
+
+	bundesstrasse.vAnnahme(std::move(rennrad));
+	bundesstrasse.vAnnahme(std::move(pkw));
+	bundesstrasse.vAnnahme(std::move(lkw));
+	bundesstrasse.vAnnahme(std::move(parkenderPKW), 2.0);
+
+	std::cout << bundesstrasse << std::endl;
+
+	double dTakt = 0.5;
+	double dDauer = 5.0;
+
+	for (dGlobaleZeit = 0.0; dGlobaleZeit < dDauer; dGlobaleZeit += dTakt) {
+		bundesstrasse.vSimulieren();
+		std::cout << bundesstrasse << std::endl;
+	}
+}
+
+
 int main() {
-	vAufgabe_4();
+	vAufgabe_5();
 	return 0;
 }

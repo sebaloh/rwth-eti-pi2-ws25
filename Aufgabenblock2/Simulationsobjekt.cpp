@@ -20,6 +20,12 @@ void Simulationsobjekt::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
 }
 
+
+
+std::string Simulationsobjekt::sName() const {
+	return p_sName;
+}
+
 Simulationsobjekt& Simulationsobjekt::operator=(const Simulationsobjekt& other) {
 	if (this == &other) {
 		return *this;

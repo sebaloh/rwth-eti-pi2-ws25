@@ -17,11 +17,15 @@ void Weg::vAusgeben(std::ostream& os) const {
 	Simulationsobjekt::vAusgeben(os);
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(12) << p_dLaenge;
 
-	os << "( ";
+	os << std::setw(4) << "( ";
 	for (auto& fahrzeug : p_pFahrzeuge) {
 		os << fahrzeug->sName() << " ";
 	}
 	os << ")";
+}
+
+double Weg::dLaenge() const {
+	return p_dLaenge;
 }
 
 void Weg::vSimulieren() {
@@ -31,6 +35,12 @@ void Weg::vSimulieren() {
 }
 
 void Weg::vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug) {
+	pFahrzeug->vNeueStrecke(*this);
+	p_pFahrzeuge.push_back(std::move(pFahrzeug));
+}
+
+void Weg::vAnnahme(std::unique_ptr<Fahrzeug> pFahrzeug, double dStartzeit) {
+	pFahrzeug->vNeueStrecke(*this, dStartzeit);
 	p_pFahrzeuge.push_back(std::move(pFahrzeug));
 }
 

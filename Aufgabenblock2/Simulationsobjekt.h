@@ -27,6 +27,8 @@ public:
 
 	virtual void vSimulieren() = 0;
 
+	std::string sName() const;
+
 	Simulationsobjekt(const Simulationsobjekt& other) = delete;
 	Simulationsobjekt& operator=(const Simulationsobjekt& other);
 	bool operator==(const Simulationsobjekt& other) const;

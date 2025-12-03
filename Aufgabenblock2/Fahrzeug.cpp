@@ -6,6 +6,8 @@
  */
 
 #include "Fahrzeug.h"
+#include "Fahren.h"
+#include "Parken.h"
 
 void Fahrzeug::vAusgeben(std::ostream& os) const {
 	Simulationsobjekt::vAusgeben(os);
@@ -19,7 +21,14 @@ void Fahrzeug::vSimulieren() {
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
+		if (p_pVerhalten) {
+			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
+		} else {
+            dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
+        }
+
 		p_dGesamtStrecke += dGefahreneStrecke;
+		p_dAbschnittStrecke += dGefahreneStrecke;
 		p_dGesamtZeit += dDeltaZeit;
 		p_dZeit = dGlobaleZeit;
 	}
@@ -33,8 +42,18 @@ double Fahrzeug::dGeschwindigkeit() const {
 	return p_dMaxGeschwindigkeit;
 }
 
-std::string Fahrzeug::sName() const {
-	return p_sName;
+void Fahrzeug::vNeueStrecke(Weg& weg) {
+    p_pVerhalten = std::make_unique<Fahren>(weg);
+    p_dAbschnittStrecke = 0.0;
+}
+
+void Fahrzeug::vNeueStrecke(Weg& weg, double dStartzeit) {
+	p_pVerhalten = std::make_unique<Parken>(weg, dStartzeit);
+	p_dAbschnittStrecke = 0.0;
+}
+
+double Fahrzeug::dAbschnittStrecke() const {
+    return p_dAbschnittStrecke;
 }
 
 bool Fahrzeug::operator<(const Fahrzeug& other) const {
@@ -45,7 +64,8 @@ Fahrzeug::Fahrzeug(const std::string sName) :
 	Simulationsobjekt(sName),
 	p_dMaxGeschwindigkeit(0.0),
 	p_dGesamtStrecke(0.0),
-	p_dGesamtZeit(0.0)
+	p_dGesamtZeit(0.0),
+	p_dAbschnittStrecke(0.0)
 {
 
 }
@@ -54,7 +74,12 @@ Fahrzeug::Fahrzeug(const std::string sName, const double dMaxGeschwindigkeit) :
 	Simulationsobjekt(sName),
 	p_dMaxGeschwindigkeit(dMaxGeschwindigkeit < 0.0 ? 0.0 : dMaxGeschwindigkeit),
 	p_dGesamtStrecke(0.0),
-	p_dGesamtZeit(0.0)
+	p_dGesamtZeit(0.0),
+	p_dAbschnittStrecke(0.0)
 {
+
+}
+
+Fahrzeug::~Fahrzeug() {
 
 }

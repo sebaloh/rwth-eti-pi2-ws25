@@ -6,6 +6,7 @@
  */
 
 #include "Fahrrad.h"
+#include "Verhalten.h"
 
 void Fahrrad::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
@@ -16,11 +17,21 @@ void Fahrrad::vAusgeben(std::ostream& os) const {
 
 void Fahrrad::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
-	double dGefahreneStrecke = dGeschwindigkeit() * dDeltaZeit;
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
+		double dGefahreneStrecke = 0.0;
+
+		if (p_pVerhalten) {
+			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
+		} else {
+			dGefahreneStrecke = dGeschwindigkeit() * dDeltaZeit;
+		}
+
+		dGefahreneStrecke = dGeschwindigkeit() * dDeltaZeit;
+
 		p_dGesamtStrecke += dGefahreneStrecke;
+		p_dAbschnittStrecke += dGefahreneStrecke;
 		p_dGesamtZeit += dDeltaZeit;
 		p_dZeit = dGlobaleZeit;
 	}

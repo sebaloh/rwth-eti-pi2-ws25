@@ -6,6 +6,7 @@
  */
 
 #include "PKW.h"
+#include "Verhalten.h"
 
 void PKW::vAusgeben(std::ostream& os) const {
 	Fahrzeug::vAusgeben(os);
@@ -16,23 +17,36 @@ void PKW::vAusgeben(std::ostream& os) const {
 
 void PKW::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
-	double dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
-	double dVerbrauch = dGefahreneStrecke * p_dVerbrauch / 100.0;
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
+		double dGefahreneStrecke = 0.0;
+
+		if (p_pVerhalten) {
+			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
+		} else {
+			dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
+		}
+
+		dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
+		double dVerbrauch = dGefahreneStrecke * p_dVerbrauch / 100.0;
+
 		p_dGesamtZeit += dDeltaZeit;
 		p_dZeit = dGlobaleZeit;
 
 		if (dVerbrauch <= p_dTankinhalt) {
 			p_dGesamtStrecke += dGefahreneStrecke;
+			p_dAbschnittStrecke += dGefahreneStrecke;
 			p_dTankinhalt -= dVerbrauch;
 		} else if (p_dTankinhalt == 0.0) {
 			return;
 		} else {
-			p_dGesamtStrecke += dGefahreneStrecke * (dVerbrauch / p_dTankinhalt);
+			dGefahreneStrecke * (dVerbrauch / p_dTankinhalt);
+
+			p_dGesamtStrecke += dGefahreneStrecke;
+			p_dAbschnittStrecke += dGefahreneStrecke;
 			p_dTankinhalt = 0.0;
-		}
+	}
 	}
 }
 
