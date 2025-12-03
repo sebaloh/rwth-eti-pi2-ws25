@@ -15,14 +15,13 @@ double Fahren::dStrecke(Fahrzeug& aFzg, double dZeitIntervall) {
 	double dRestStrecke = p_Weg.dLaenge() - aFzg.dAbschnittStrecke();
 
 	if (dRestStrecke <= 0.0) {
-		return 0.0;
+		throw Streckenende(aFzg, p_Weg);
 	}
 
 	if (dMoeglicheStrecke < dRestStrecke) {
 		return dMoeglicheStrecke;
 	} else {
-		std::cout << "Fahrzeug " << aFzg.sName() << " am Ende des Weges angekommen." << std::endl;
-		return dRestStrecke;
+		throw Streckenende(aFzg, p_Weg);
 	}
 }
 

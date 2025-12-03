@@ -9,6 +9,7 @@
 #define WEG_H_
 
 #include "Simulationsobjekt.h"
+#include "Fahrausnahme.h"
 #include "Tempolimit.h"
 #include <list>
 #include <memory>

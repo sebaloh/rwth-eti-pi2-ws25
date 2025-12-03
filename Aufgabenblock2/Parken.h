@@ -9,11 +9,13 @@
 #define PARKEN_H_
 
 #include "Verhalten.h"
+#include "Losfahren.h"
+#include "Streckenende.h"
 
 class Parken : public Verhalten {
 private:
     double p_dStartzeit;
-		bool p_bGestartet = false;
+		bool p_bGestartet;
 public:
     double dStrecke(Fahrzeug& aFzg, double dZeitIntervall) override;
 

@@ -12,12 +12,12 @@
 extern double dGlobaleZeit;
 
 double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall) {
-    if (dGlobaleZeit < p_dStartzeit) {
+    if (dGlobaleZeit < p_dStartzeit - 0.001) {
         return 0.0;
     } else {
 		if (!p_bGestartet) {
-            std::cout << "Fahrzeug " << aFzg.sName() << " startet zur Zeit " << dGlobaleZeit << " auf Weg " << p_Weg.sName() << std::endl;
             p_bGestartet = true;
+            throw Losfahren(aFzg, p_Weg);
         }
 
         double dGeschwindigkeit = std::min(aFzg.dGeschwindigkeit(), p_Weg.getTempolimit());
@@ -25,21 +25,21 @@ double Parken::dStrecke(Fahrzeug& aFzg, double dZeitIntervall) {
         double dRestStrecke = p_Weg.dLaenge() - aFzg.dAbschnittStrecke();
 
 		if (dRestStrecke <= 0.0) {
-			return 0.0;
+			throw Streckenende(aFzg, p_Weg);
 		}
 
         if (dMoeglicheStrecke < dRestStrecke) {
             return dMoeglicheStrecke;
         } else {
-            std::cout << "Fahrzeug " << aFzg.sName() << " am Ende des Weges angekommen." << std::endl;
-            return dRestStrecke;
+			throw Streckenende(aFzg, p_Weg);
         }
     }
 }
 
 Parken::Parken(Weg& weg, double dStartzeit) :
 	Verhalten(weg),
-	p_dStartzeit(dStartzeit)
+	p_dStartzeit(dStartzeit),
+    p_bGestartet(false)
 {
 
 }

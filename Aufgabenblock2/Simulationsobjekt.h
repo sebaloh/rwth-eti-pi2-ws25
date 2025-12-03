@@ -28,6 +28,7 @@ public:
 	virtual void vSimulieren() = 0;
 
 	std::string sName() const;
+	int iID() const;
 
 	Simulationsobjekt(const Simulationsobjekt& other) = delete;
 	Simulationsobjekt& operator=(const Simulationsobjekt& other);

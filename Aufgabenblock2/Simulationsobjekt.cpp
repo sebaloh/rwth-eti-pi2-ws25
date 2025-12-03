@@ -26,6 +26,10 @@ std::string Simulationsobjekt::sName() const {
 	return p_sName;
 }
 
+int Simulationsobjekt::iID() const {
+	return p_iID;
+}
+
 Simulationsobjekt& Simulationsobjekt::operator=(const Simulationsobjekt& other) {
 	if (this == &other) {
 		return *this;

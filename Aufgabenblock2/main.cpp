@@ -301,14 +301,14 @@ void vAufgabe_5() {
 	std::unique_ptr<Fahrzeug> rennrad = std::make_unique<Fahrrad>("Rennrad", 40.0);
 	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 10.0, 60.0);
 	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 20.0, 100.0);
-	std::unique_ptr<Fahrzeug> parkenderPKW = std::make_unique<PKW>("parkenderPKW", 80.0, 20.0, 100.0);
+	std::unique_ptr<Fahrzeug> pPKW = std::make_unique<PKW>("pPKW", 80.0, 20.0, 100.0);
 
 	Weg::vKopf();
 
 	bundesstrasse.vAnnahme(std::move(rennrad));
 	bundesstrasse.vAnnahme(std::move(pkw));
 	bundesstrasse.vAnnahme(std::move(lkw));
-	bundesstrasse.vAnnahme(std::move(parkenderPKW), 2.0);
+	bundesstrasse.vAnnahme(std::move(pPKW), 2.0);
 
 	std::cout << bundesstrasse << std::endl;
 
@@ -321,8 +321,44 @@ void vAufgabe_5() {
 	}
 }
 
+void vAufgabe_6() {
+
+	Weg innerortsWeg("Hauptstrasse", 50.0, Tempolimit::Innerorts);
+	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 10.0, 80.0);
+	std::unique_ptr<Fahrzeug> rad = std::make_unique<Fahrrad>("Rad", 25.0);
+	std::unique_ptr<Fahrzeug> pPKW = std::make_unique<PKW>("pPKW", 180.0, 7.0, 50.0);
+
+	Weg autobahnWeg("A31", 200.0, Tempolimit::Autobahn);
+	std::unique_ptr<Fahrzeug> pkw2 = std::make_unique<PKW>("PKW2", 240.0, 20.0, 80.0);
+	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 30.0, 150.0);
+	std::unique_ptr<Fahrzeug> pLKW = std::make_unique<PKW>("pLKW", 80.0, 25.0, 120.0);
+
+	innerortsWeg.vAnnahme(std::move(pkw));
+	innerortsWeg.vAnnahme(std::move(rad));
+	innerortsWeg.vAnnahme(std::move(pPKW), 2.0);
+
+	autobahnWeg.vAnnahme(std::move(pkw2));
+	autobahnWeg.vAnnahme(std::move(lkw));
+	autobahnWeg.vAnnahme(std::move(pLKW), 3.0);
+
+	double dTakt = 0.5;
+	double dDauer = 10.0;
+
+	Weg::vKopf();
+	std::cout << innerortsWeg << std::endl;
+	std::cout << autobahnWeg << std::endl;
+
+	for (dGlobaleZeit = 0.0; dGlobaleZeit < dDauer; dGlobaleZeit += dTakt) {
+		innerortsWeg.vSimulieren();
+		autobahnWeg.vSimulieren();
+
+		Weg::vKopf();
+		std::cout << innerortsWeg << std::endl;
+		std::cout << autobahnWeg << std::endl;
+	}
+}
 
 int main() {
-	vAufgabe_5();
+	vAufgabe_6();
 	return 0;
 }

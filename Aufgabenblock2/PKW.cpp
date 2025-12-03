@@ -28,7 +28,6 @@ void PKW::vSimulieren() {
 			dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
 		}
 
-		dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
 		double dVerbrauch = dGefahreneStrecke * p_dVerbrauch / 100.0;
 
 		p_dGesamtZeit += dDeltaZeit;
@@ -41,10 +40,10 @@ void PKW::vSimulieren() {
 		} else if (p_dTankinhalt == 0.0) {
 			return;
 		} else {
-			dGefahreneStrecke * (dVerbrauch / p_dTankinhalt);
+			double dMoeglicheStrecke = dGefahreneStrecke * (dVerbrauch / p_dTankinhalt);
 
-			p_dGesamtStrecke += dGefahreneStrecke;
-			p_dAbschnittStrecke += dGefahreneStrecke;
+			p_dGesamtStrecke += dMoeglicheStrecke;
+			p_dAbschnittStrecke += dMoeglicheStrecke;
 			p_dTankinhalt = 0.0;
 	}
 	}

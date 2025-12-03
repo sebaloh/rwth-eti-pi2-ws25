@@ -30,7 +30,12 @@ double Weg::dLaenge() const {
 
 void Weg::vSimulieren() {
 	for (auto& fahrzeug : p_pFahrzeuge) {
-		fahrzeug->vSimulieren();
+		try {
+			fahrzeug->vSimulieren();
+		}
+		catch (Fahrausnahme& ausnahme) {
+			ausnahme.vBearbeiten();
+		}
 	}
 }
 

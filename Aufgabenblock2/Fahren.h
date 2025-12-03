@@ -9,6 +9,7 @@
 #define FAHREN_H_
 
 #include "Verhalten.h"
+#include "Streckenende.h"
 
 class Weg;
 class Fahrzeug;
