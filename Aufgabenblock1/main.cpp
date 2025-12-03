@@ -11,6 +11,12 @@
 #include <vector>
 #include <limits>
 #include <cmath>
+#include <iomanip>
+#include <algorithm>
+
+using namespace std;
+extern double dGlobaleZeit;
+double dEpsilon = 0.001;
 
 void vAufgabe_1() {
 	Fahrzeug sFahrzeug("statisches_Fahrzeug");
@@ -232,7 +238,41 @@ void vAufgabe_3() {
 	}
 }
 
+void vAufgabe_AB1() {
+
+    int l = 0; // Laufindex für gezielte AUsgabe
+    vector<int> ausgabe{13};
+    double dTakt = 0.4;
+
+    std::vector<unique_ptr<Fahrzeug>> vecFahrzeuge;
+    vecFahrzeuge.push_back(make_unique <PKW>("Audi", 217.0, 10.7, 55));
+    vecFahrzeuge.push_back(make_unique <Fahrrad>("BMX", 21.4));
+    for (dGlobaleZeit = 0; dGlobaleZeit < 6; dGlobaleZeit += dTakt)
+    {
+        auto itL = find(ausgabe.begin(), ausgabe.end(), l);
+        if (itL != ausgabe.end()) {
+            std::cout << std::endl << l <<  " Globalezeit = " << dGlobaleZeit << std::endl;
+            Fahrzeug::vKopf();
+        }
+
+        for (int i = 0; i < vecFahrzeuge.size(); i++)
+        {
+            vecFahrzeuge[i]->vSimulieren();
+            if (fabs(dGlobaleZeit - 3.0) < dTakt/2)
+            {
+                vecFahrzeuge[i]->dTanken();
+            }
+            if (itL != ausgabe.end()) {
+                std::cout << *vecFahrzeuge[i] << endl;
+            }
+        }
+        l++;
+    }
+    char c;
+    std::cin >> c;
+}
+
 int main() {
-	vAufgabe_3();
+	vAufgabe_AB1();
 	return 0;
 }
