@@ -14,6 +14,12 @@ void PKW::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << getGeschwindigkeit();
 }
 
+void PKW::vEinlesen(std::istream& is) {
+    Fahrzeug::vEinlesen(is);
+    is >> p_dVerbrauch >> p_dTankvolumen;
+    p_dTankinhalt = p_dTankvolumen / 2.0;
+}
+
 void PKW::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
 
@@ -63,8 +69,20 @@ double PKW::dTanken(double dMenge) {
 	return dEchteMenge;
 }
 
+PKW::PKW() :
+	Fahrzeug("", 0.0),
+	p_dVerbrauch(0.0),
+	p_dTankvolumen(55.0),
+	p_dTankinhalt(27.5)
+{
+
+}
+
 PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit) :
-	Fahrzeug(sName, dMaxGeschwindigkeit)
+	Fahrzeug(sName, dMaxGeschwindigkeit),
+	p_dVerbrauch(0.0),
+	p_dTankvolumen(55.0),
+	p_dTankinhalt(27.5)
 {
 
 }
@@ -72,7 +90,7 @@ PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit) :
 PKW::PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen) :
 	Fahrzeug(sName, dMaxGeschwindigkeit),
 	p_dVerbrauch(dVerbrauch < 0.0 ? 0.0 : dVerbrauch),
-	p_dTankvolumen(dTankvolumen <= 0.0 ? 55 : dTankvolumen),
+	p_dTankvolumen(dTankvolumen <= 0.0 ? 55.0 : dTankvolumen),
 	p_dTankinhalt(p_dTankvolumen/2)
 {
 

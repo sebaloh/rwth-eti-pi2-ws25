@@ -15,6 +15,7 @@
 class Fahrrad : public Fahrzeug {
 public:
 	void vAusgeben(std::ostream& os) const override;
+	void vEinlesen(std::istream& is) override;
 
 	void vSimulieren() override;
 	void vZeichnen(const Weg& weg) const override;
@@ -22,6 +23,7 @@ public:
 	// Getter (nicht gleich p_dMaxGeschwindigkeit)
 	double getGeschwindigkeit() const override;
 
+	Fahrrad();
 	Fahrrad(const std::string sName, const double dMaxGeschwindigkeit);
 };
 

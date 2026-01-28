@@ -23,6 +23,8 @@ private:
 	std::list<std::shared_ptr<Weg>> p_pWege;
 	double p_dTankstelle;
 public:
+	void vEinlesen(std::istream& is) override;
+
 	static void vVerbinde(const std::string& sHinweg, const std::string& sRueckweg, double dLaenge, std::shared_ptr<Kreuzung> pStartKreuzung, std::shared_ptr<Kreuzung> pZielKreuzung, Tempolimit eTempolimit = Tempolimit::Autobahn, bool bUeberholverbot = true);
 
 	void vTanken(Fahrzeug& fahrzeug);
@@ -37,6 +39,7 @@ public:
 
 	std::shared_ptr<Weg> pZufaelligerWeg(Weg& weg);
 
+	Kreuzung();
 	Kreuzung(std::string sName, double dTankstelle = 0.0);
 };
 

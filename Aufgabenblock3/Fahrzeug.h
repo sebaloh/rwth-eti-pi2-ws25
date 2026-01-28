@@ -25,6 +25,7 @@ protected:
 	std::unique_ptr<Verhalten> p_pVerhalten;
 public:
 	virtual void vAusgeben(std::ostream& os) const override;
+	void vEinlesen(std::istream& is) override;
 
 	virtual void vSimulieren() override;
 	virtual void vZeichnen(const Weg& weg) const;

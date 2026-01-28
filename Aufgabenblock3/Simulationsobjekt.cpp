@@ -20,7 +20,18 @@ void Simulationsobjekt::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::right) << std::setiosflags(std::ios::left) << std::setw(16) << p_sName;
 }
 
+void Simulationsobjekt::vEinlesen(std::istream& is) {
+	std::string sEingelesenerName;
+	is >> sEingelesenerName;
 
+	if (!p_sName.empty() && p_sName != sEingelesenerName) {
+		throw std::runtime_error("Fehler: Objekt mit Namen '" + sEingelesenerName + "' kann nicht eingelesen werden - Name bereits gesetzt.");
+	}
+
+	if (p_sName.empty()) {
+		const_cast<std::string&>(p_sName) = sEingelesenerName;
+	}
+}
 
 std::string Simulationsobjekt::getName() const {
 	return p_sName;
@@ -68,4 +79,9 @@ Simulationsobjekt::~Simulationsobjekt() {
 std::ostream& operator<<(std::ostream& os, const Simulationsobjekt& simulationsobjekt) {
 	simulationsobjekt.vAusgeben(os);
 	return os;
+}
+
+std::istream& operator>>(std::istream& is, Simulationsobjekt& simulationsobjekt) {
+    simulationsobjekt.vEinlesen(is);
+    return is;
 }

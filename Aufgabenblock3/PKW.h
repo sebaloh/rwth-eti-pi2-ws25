@@ -19,6 +19,7 @@ private:
 	double p_dTankinhalt;
 public:
 	void vAusgeben(std::ostream& os) const override;
+	void vEinlesen(std::istream& is) override;
 
 	void vSimulieren() override;
 	void vZeichnen(const Weg& weg) const override;
@@ -28,6 +29,7 @@ public:
 
 	double dTanken(double dMenge = std::numeric_limits<double>::infinity()) override;
 
+	PKW();
 	PKW(const std::string sName, const double dMaxGeschwindigkeit);
 	PKW(const std::string sName, const double dMaxGeschwindigkeit, const double dVerbrauch, const double dTankvolumen);
 };

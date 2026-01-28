@@ -18,12 +18,13 @@ class Simulationsobjekt {
 protected:
 	static int p_iMaxID;
 
-	const std::string p_sName;
+	std::string p_sName;
 	const int p_iID;
 	double p_dZeit;
 public:
 	static void vKopf();
 	virtual void vAusgeben(std::ostream& os) const;
+	virtual void vEinlesen(std::istream& is);
 
 	// Reine virtuelle Simulationsmethode
 	virtual void vSimulieren() = 0;
@@ -48,5 +49,8 @@ public:
 
 // Ausgabeoperator
 std::ostream& operator<<(std::ostream& os, const Simulationsobjekt& simulationsobjekt);
+
+// Eingabeoperator
+std::istream& operator>>(std::istream& is, Simulationsobjekt& simulationsobjekt);
 
 #endif /* SIMULATIONSOBJEKT_H_ */

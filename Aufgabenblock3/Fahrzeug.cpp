@@ -15,6 +15,11 @@ void Fahrzeug::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << p_dGesamtStrecke;
 }
 
+void Fahrzeug::vEinlesen(std::istream& is) {
+	  Simulationsobjekt::vEinlesen(is);
+	  is >> p_dMaxGeschwindigkeit;
+}
+
 void Fahrzeug::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
 	double dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;

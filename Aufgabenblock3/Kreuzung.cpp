@@ -9,6 +9,11 @@
 #include "Fahrzeug.h"
 #include "PKW.h"
 
+void Kreuzung::vEinlesen(std::istream& is) {
+    Simulationsobjekt::vEinlesen(is);
+    is >> p_dTankstelle;
+}
+
 void Kreuzung::vVerbinde(const std::string& sHinweg, const std::string& sRueckweg, double dLaenge, std::shared_ptr<Kreuzung> pStartKreuzung, std::shared_ptr<Kreuzung> pZielKreuzung, Tempolimit eTempolimit, bool bUeberholverbot) {
 	std::shared_ptr<Weg> pHinweg = std::make_shared<Weg>(sHinweg, dLaenge, eTempolimit, bUeberholverbot, pZielKreuzung);
 
@@ -88,6 +93,13 @@ std::shared_ptr<Weg> Kreuzung::pZufaelligerWeg(Weg& weg) {
 	std::uniform_int_distribution<> dis(0, moeglicheWege.size() - 1);
 
 	return moeglicheWege[dis(gen)];
+}
+
+Kreuzung::Kreuzung() :
+	Simulationsobjekt(""),
+	p_dTankstelle(0.0)
+{
+
 }
 
 Kreuzung::Kreuzung(std::string sName, double dTankstelle) :

@@ -22,7 +22,10 @@ double Fahren::dStrecke(Fahrzeug& aFzg, double dZeitIntervall) {
 	double dMaxStrecke = std::min(dRestStrecke, dEntfernungSchranke);
 
 	if (dMoeglicheStrecke < dMaxStrecke) {
-		return dMoeglicheStrecke;
+		if (dMoeglicheStrecke < dRestStrecke) {
+			return dMoeglicheStrecke;
+		}
+		return dRestStrecke;
 	} else if (dMaxStrecke >= dRestStrecke) {
 		throw Streckenende(aFzg, p_Weg);
 	} else {

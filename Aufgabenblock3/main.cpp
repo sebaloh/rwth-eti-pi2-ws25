@@ -11,6 +11,7 @@
 #include "Kreuzung.h"
 #include "SimuClient.h"
 #include "vertagt_liste.h"
+#include "Simulation.h"
 #include <memory>
 #include <vector>
 #include <limits>
@@ -18,6 +19,8 @@
 #include <iomanip>
 #include <algorithm>
 #include <random>
+#include <fstream>
+#include <stdexcept>
 
 using namespace std;
 extern double dGlobaleZeit;
@@ -495,7 +498,80 @@ void vAufgabe_7() {
 	vBeendeGrafik();
 }
 
+void vAufgabe_8() {
+	std::ifstream datei("VO.dat");
+	datei.exceptions(std::ios::badbit | std::ios::failbit);
+
+	try {
+		if (!datei.is_open()) {
+			throw std::runtime_error("Fehler: Datei 'VO.dat' konnte nicht geöffnet werden.");
+		}
+
+		std::string sTyp;
+
+		while (datei >> sTyp) {
+			if (sTyp == "PKW") {
+				PKW pkw;
+				datei >> pkw;
+				std::cout << "Eingelesener PKW:" << std::endl;
+				std::cout << pkw << std::endl;
+			}
+			else if (sTyp == "Fahrrad") {
+				Fahrrad fahrrad;
+				datei >> fahrrad;
+				std::cout << "Eingelesenes Fahrrad:" << std::endl;
+				std::cout << fahrrad << std::endl;
+			}
+			else if (sTyp == "Kreuzung") {
+				Kreuzung kreuzung;
+				datei >> kreuzung;
+				std::cout << "Eingelesene Kreuzung:" << std::endl;
+				std::cout << kreuzung << std::endl;
+			}
+			else {
+				throw std::runtime_error("Fehler: Unbekannter Objekttyp '" + sTyp + "'");
+			}
+		}
+	}
+	catch (const std::ios_base::failure& e) {
+		if (!datei.eof()) {
+			std::cerr << "I/O Fehler: " << e.what() << std::endl;
+		}
+	}
+	catch (const std::runtime_error& e) {
+		std::cerr << e.what() << std::endl;
+	}
+
+	datei.close();
+}
+
+void vAufgabe_9() {
+	bInitialisiereGrafik(1100, 900);
+
+    Simulation simulation;
+    std::ifstream datei("SimuDisplay.dat");
+
+    if (!datei.is_open()) {
+        std::cerr << "Fehler: Datei konnte nicht geöffnet werden." << std::endl;
+        return;
+    }
+
+    try {
+        simulation.vEinlesen(datei, true);
+        simulation.vSimulieren(20.0, 0.5);
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Simulationsfehler: " << e.what() << std::endl;
+    }
+
+    datei.close();
+
+    std::cout << "Druecke Enter zum Beenden..." << std::endl;
+	std::cin.get();
+	vBeendeGrafik();
+}
+
 int main() {
-	vAufgabe_7();
+	vAufgabe_9();
 	return 0;
 }

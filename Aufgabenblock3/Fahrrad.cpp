@@ -14,6 +14,10 @@ void Fahrrad::vAusgeben(std::ostream& os) const {
 	os << std::resetiosflags(std::ios::left) << std::setiosflags(std::ios::right) << std::setprecision(2) << std::setiosflags(std::ios::fixed) << std::setw(16) << getGeschwindigkeit();
 }
 
+void Fahrrad::vEinlesen(std::istream& is) {
+    Fahrzeug::vEinlesen(is);
+}
+
 void Fahrrad::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
 
@@ -27,7 +31,7 @@ void Fahrrad::vSimulieren() {
 			dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 		}
 
-		dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
+		//dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 
 		p_dGesamtStrecke += dGefahreneStrecke;
 		p_dAbschnittStrecke += dGefahreneStrecke;
@@ -43,6 +47,12 @@ void Fahrrad::vZeichnen(const Weg& weg) const {
 double Fahrrad::getGeschwindigkeit() const {
 	double dTatsaechlicheGeschwindigkeit = p_dMaxGeschwindigkeit * (1.0 - (p_dGesamtStrecke / 200.0));
 	return dTatsaechlicheGeschwindigkeit < 12.0 ? 12.0 : dTatsaechlicheGeschwindigkeit;
+}
+
+Fahrrad::Fahrrad() :
+	Fahrzeug("", 0.0)
+{
+
 }
 
 Fahrrad::Fahrrad(const std::string sName, const double dMaxGeschwindigkeit) :
