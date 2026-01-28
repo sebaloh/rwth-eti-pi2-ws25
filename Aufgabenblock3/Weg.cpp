@@ -51,6 +51,18 @@ double Weg::getVirtuelleSchranke() const {
 	return p_dVirtuelleSchranke;
 }
 
+std::shared_ptr<const Kreuzung> Weg::getZielkreuzung() const {
+	return p_pZielkreuzung.lock();
+}
+
+std::shared_ptr<Weg> Weg::getRueckweg() const {
+	return p_pRueckweg.lock();
+}
+
+void Weg::setRueckweg(std::shared_ptr<Weg> pRueckweg){
+	p_pRueckweg = pRueckweg;
+}
+
 void Weg::vSimulieren() {
 	p_pFahrzeuge.vAktualisieren();
 
@@ -97,11 +109,12 @@ std::unique_ptr<Fahrzeug> Weg::pAbgabe(const Fahrzeug& fahrzeug) {
 	return nullptr;
 }
 
-Weg::Weg(std::string sName, double dLaenge, Tempolimit eTempolimit, bool bUeberholverbot) :
+Weg::Weg(std::string sName, double dLaenge, Tempolimit eTempolimit, bool bUeberholverbot, std::shared_ptr<const Kreuzung> pZielkreuzung) :
 	Simulationsobjekt(sName),
 	p_dLaenge(dLaenge),
 	p_eTempolimit(eTempolimit),
-	p_bUeberholverbot(bUeberholverbot)
+	p_bUeberholverbot(bUeberholverbot),
+	p_pZielkreuzung(pZielkreuzung)
 {
 
 }

@@ -8,6 +8,7 @@
 #include "PKW.h"
 #include "Fahrrad.h"
 #include "Weg.h"
+#include "Kreuzung.h"
 #include "SimuClient.h"
 #include "vertagt_liste.h"
 #include <memory>
@@ -431,7 +432,70 @@ void vAufgabe_AB2() {
 	}
 }
 
+void vAufgabe_7() {
+	bInitialisiereGrafik(1000, 600);
+
+	std::shared_ptr<Kreuzung> Kr1 = std::make_shared<Kreuzung>("Kr1", 0.0);
+	std::shared_ptr<Kreuzung> Kr2 = std::make_shared<Kreuzung>("Kr2", 1000.0);
+	std::shared_ptr<Kreuzung> Kr3 = std::make_shared<Kreuzung>("Kr3", 0.0);
+	std::shared_ptr<Kreuzung> Kr4 = std::make_shared<Kreuzung>("Kr4", 0.0);
+
+	bZeichneKreuzung(680, 40);
+	bZeichneKreuzung(680, 300);
+	bZeichneKreuzung(680, 570);
+	bZeichneKreuzung(320, 300);
+
+	int strasse1[] = {680, 40, 680, 300};
+	bZeichneStrasse("W12", "W21", 40, 2, strasse1);
+
+	int strasse2[] = {680, 300, 850, 300, 970, 390, 970, 500, 850, 570, 680, 570};
+	bZeichneStrasse("W23a", "W32a", 40, 6, strasse2);
+
+	int strasse3[] = {680, 300, 680, 570};
+	bZeichneStrasse("W23b", "W32b", 40, 2, strasse3);
+
+	int strasse4[] = {680, 300, 320, 300};
+	bZeichneStrasse("W24", "W42", 55, 2, strasse4);
+
+	int strasse5[] = {680, 570, 500, 570, 350, 510, 320, 420, 320, 300};
+	bZeichneStrasse("W34", "W43", 85, 5, strasse5);
+
+	int strasse6[] = {320, 300, 170, 300, 70, 250, 80, 90, 200, 60, 320, 150, 320, 300};
+	bZeichneStrasse("W44a", "W44b", 130, 7, strasse6);
+
+	Kreuzung::vVerbinde("W12", "W21", 40.0, Kr1, Kr2, Tempolimit::Innerorts, true);
+	Kreuzung::vVerbinde("W23a", "W32a", 115.0, Kr2, Kr3, Tempolimit::Autobahn, false);
+	Kreuzung::vVerbinde("W23b", "W32b", 40.0, Kr2, Kr3, Tempolimit::Innerorts, true);
+	Kreuzung::vVerbinde("W24", "W42", 55.0, Kr2, Kr3, Tempolimit::Innerorts, true);
+	Kreuzung::vVerbinde("W34", "W43", 85.0, Kr3, Kr4, Tempolimit::Autobahn, false);
+	Kreuzung::vVerbinde("W44a", "W44b", 130.0, Kr4, Kr4, Tempolimit::Landstrasse, false);
+
+	std::unique_ptr<Fahrzeug> pkw = std::make_unique<PKW>("PKW", 160.0, 15.0, 80.0);
+	std::unique_ptr<Fahrzeug> rad = std::make_unique<Fahrrad>("Rad", 25.0);
+	std::unique_ptr<Fahrzeug> lkw = std::make_unique<PKW>("LKW", 80.0, 20.0, 120.0);
+
+	Kr1->vAnnahme(std::move(pkw), 0.0);
+	Kr1->vAnnahme(std::move(rad), 0.0);
+	Kr1->vAnnahme(std::move(lkw), 2.0);
+
+	double dTakt = 0.5;
+	double dDauer = 20.0;
+
+	for (dGlobaleZeit = 0.0; dGlobaleZeit < dDauer; dGlobaleZeit += dTakt) {
+		Kr1->vSimulieren();
+		Kr2->vSimulieren();
+		Kr3->vSimulieren();
+		Kr4->vSimulieren();
+
+		vSleep(100);
+	}
+
+	std::cout << "Druecke Enter zum Beenden..." << std::endl;
+	std::cin.get();
+	vBeendeGrafik();
+}
+
 int main() {
-	vAufgabe_6();
+	vAufgabe_7();
 	return 0;
 }
