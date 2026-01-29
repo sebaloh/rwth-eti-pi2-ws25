@@ -34,7 +34,7 @@ void Streckenende::vBearbeiten() {
 	std::cout << "ZEIT        : [" << dGlobaleZeit << "]" << std::endl;
 	std::cout << "KREUZUNG    : [" << kreuzung.getName() << "] [" << kreuzung.getTankstelle() << "]" << std::endl;
 	std::cout << "WECHSEL     : [" << p_Weg.getName()<< "] -> [" << pNeuerWeg->getName() << "]" << std::endl;
-	std::cout << "FAHRZEUG    : [" << *pFahrzeug << "]" << std::endl;
+	std::cout << "FAHRZEUG    : [ #" << *pFahrzeug << "]" << std::endl;
 
 	pNeuerWeg->vAnnahme(std::move(pFahrzeug));
 }

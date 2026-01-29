@@ -22,40 +22,41 @@ void PKW::vEinlesen(std::istream& is) {
 
 void PKW::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
+	double dMoeglicheStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
-		double dGefahreneStrecke = 0.0;
-
+		// Falls Simulation mit Parken/Fahren hier neu berechnen
 		if (p_pVerhalten) {
-			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
-		} else {
-			dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
+			dMoeglicheStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
 		}
 
-		double dVerbrauch = dGefahreneStrecke * p_dVerbrauch / 100.0;
-
-		p_dGesamtZeit += dDeltaZeit;
-		p_dZeit = dGlobaleZeit;
+		double dVerbrauch = dMoeglicheStrecke * p_dVerbrauch / 100.0;
 
 		if (dVerbrauch <= p_dTankinhalt) {
-			p_dGesamtStrecke += dGefahreneStrecke;
-			p_dAbschnittStrecke += dGefahreneStrecke;
+			p_dGesamtStrecke += dMoeglicheStrecke;
+			p_dAbschnittStrecke += dMoeglicheStrecke;
 			p_dTankinhalt -= dVerbrauch;
 		} else if (p_dTankinhalt == 0.0) {
 			return;
 		} else {
-			double dMoeglicheStrecke = dGefahreneStrecke * (dVerbrauch / p_dTankinhalt);
+			// Falls nicht genug Tank nicht mehr gesamte Strecke möglich
+			double dWirklicheStrecke = dMoeglicheStrecke * (dVerbrauch / p_dTankinhalt);
 
-			p_dGesamtStrecke += dMoeglicheStrecke;
-			p_dAbschnittStrecke += dMoeglicheStrecke;
+			p_dGesamtStrecke += dWirklicheStrecke;
+			p_dAbschnittStrecke += dWirklicheStrecke;
 			p_dTankinhalt = 0.0;
-	}
+		}
+
+		p_dGesamtZeit += dDeltaZeit;
+		p_dZeit = dGlobaleZeit;
 	}
 }
 
 void PKW::vZeichnen(const Weg& weg) const {
-	bZeichnePKW(getName(), weg.getName(), getAbschnittStrecke() / weg.getLaenge(), getGeschwindigkeit(), getTankinhalt());
+	double dRelPosition =  getAbschnittStrecke() / weg.getLaenge();
+	dRelPosition = std::max(0.0, std::min(1.0, dRelPosition));
+	bZeichnePKW(getName(), weg.getName(), dRelPosition, getGeschwindigkeit(), getTankinhalt());
 }
 
 double PKW::getTankinhalt() const {

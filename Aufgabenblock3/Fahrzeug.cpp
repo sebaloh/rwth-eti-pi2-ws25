@@ -26,11 +26,10 @@ void Fahrzeug::vSimulieren() {
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
+		// Falls Simulation mit Parken/Fahren hier neu berechnen
 		if (p_pVerhalten) {
 			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
-		} else {
-            dGefahreneStrecke = p_dMaxGeschwindigkeit * dDeltaZeit;
-        }
+		}
 
 		p_dGesamtStrecke += dGefahreneStrecke;
 		p_dAbschnittStrecke += dGefahreneStrecke;
@@ -54,6 +53,7 @@ double Fahrzeug::getAbschnittStrecke() const {
 void Fahrzeug::vNeueStrecke(Weg& weg) {
     p_pVerhalten = std::make_unique<Fahren>(weg);
     p_dAbschnittStrecke = 0.0;
+    p_dZeit = dGlobaleZeit;
 }
 
 double Fahrzeug::dTanken(double dMenge) {
@@ -63,6 +63,7 @@ double Fahrzeug::dTanken(double dMenge) {
 void Fahrzeug::vNeueStrecke(Weg& weg, double dStartzeit) {
 	p_pVerhalten = std::make_unique<Parken>(weg, dStartzeit);
 	p_dAbschnittStrecke = 0.0;
+	p_dZeit = dGlobaleZeit;
 }
 
 bool Fahrzeug::operator<(const Fahrzeug& other) const {

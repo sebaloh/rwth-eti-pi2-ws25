@@ -263,7 +263,7 @@ void vAufgabe_AB1() {
             Fahrzeug::vKopf();
         }
 
-        for (int i = 0; i < vecFahrzeuge.size(); i++)
+        for (size_t i = 0; i < vecFahrzeuge.size(); i++)
         {
             vecFahrzeuge[i]->vSimulieren();
             if (fabs(dGlobaleZeit - 3.0) < dTakt/2)
@@ -516,13 +516,13 @@ void vAufgabe_8() {
 				std::cout << "Eingelesener PKW:" << std::endl;
 				std::cout << pkw << std::endl;
 			}
-			else if (sTyp == "Fahrrad") {
+			else if (sTyp == "FAHRRAD") {
 				Fahrrad fahrrad;
 				datei >> fahrrad;
 				std::cout << "Eingelesenes Fahrrad:" << std::endl;
 				std::cout << fahrrad << std::endl;
 			}
-			else if (sTyp == "Kreuzung") {
+			else if (sTyp == "KREUZUNG") {
 				Kreuzung kreuzung;
 				datei >> kreuzung;
 				std::cout << "Eingelesene Kreuzung:" << std::endl;
@@ -546,6 +546,26 @@ void vAufgabe_8() {
 }
 
 void vAufgabe_9() {
+    Simulation simulation;
+    std::ifstream datei("Simu.dat");
+
+    if (!datei.is_open()) {
+        std::cerr << "Fehler: Datei konnte nicht geöffnet werden." << std::endl;
+        return;
+    }
+
+    try {
+        simulation.vEinlesen(datei, false);
+        simulation.vSimulieren(20.0, 0.5);
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Simulationsfehler: " << e.what() << std::endl;
+    }
+
+    datei.close();
+}
+
+void vAufgabe_9a() {
 	bInitialisiereGrafik(1100, 900);
 
     Simulation simulation;
@@ -566,12 +586,12 @@ void vAufgabe_9() {
 
     datei.close();
 
-    std::cout << "Druecke Enter zum Beenden..." << std::endl;
+	std::cout << "Druecke Enter zum Beenden..." << std::endl;
 	std::cin.get();
 	vBeendeGrafik();
 }
 
 int main() {
-	vAufgabe_9();
+	vAufgabe_9a();
 	return 0;
 }

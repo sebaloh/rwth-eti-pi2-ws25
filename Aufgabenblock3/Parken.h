@@ -15,7 +15,6 @@
 class Parken : public Verhalten {
 private:
     double p_dStartzeit;
-		bool p_bGestartet;
 public:
     double dStrecke(Fahrzeug& aFzg, double dZeitIntervall) override;
 

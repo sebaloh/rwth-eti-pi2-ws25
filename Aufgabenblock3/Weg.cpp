@@ -65,10 +65,14 @@ void Weg::setRueckweg(std::shared_ptr<Weg> pRueckweg){
 
 void Weg::vSimulieren() {
 	p_pFahrzeuge.vAktualisieren();
-
+	// Schranke zurücksetzten, da sie noch auf dem hintersten Fahrzeug steht und so alles blockiert
 	p_dVirtuelleSchranke = p_dLaenge;
 
 	for (auto& fahrzeug : p_pFahrzeuge) {
+		if (!fahrzeug) {
+			continue;
+		}
+
 		try {
 			fahrzeug->vSimulieren();
 			fahrzeug->vZeichnen(*this);
@@ -76,7 +80,10 @@ void Weg::vSimulieren() {
 			if (p_bUeberholverbot) {
 				PKW* pkw = dynamic_cast<PKW*>(fahrzeug.get());
 
+				// Nur für !PKWs und PKWs mit Tank neue Schranke
+				// PKWs ohne Tank werden übersprungen
 				if (pkw == nullptr || pkw->getTankinhalt() > 0) {
+					// Schranke für folgende Fahrzeuge ist nun der Ort des Autos
 					p_dVirtuelleSchranke = fahrzeug->getAbschnittStrecke();
 				}
 			}
@@ -114,6 +121,7 @@ Weg::Weg(std::string sName, double dLaenge, Tempolimit eTempolimit, bool bUeberh
 	p_dLaenge(dLaenge),
 	p_eTempolimit(eTempolimit),
 	p_bUeberholverbot(bUeberholverbot),
+	p_dVirtuelleSchranke(dLaenge),
 	p_pZielkreuzung(pZielkreuzung)
 {
 

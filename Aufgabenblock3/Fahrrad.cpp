@@ -20,18 +20,14 @@ void Fahrrad::vEinlesen(std::istream& is) {
 
 void Fahrrad::vSimulieren() {
 	double dDeltaZeit = dGlobaleZeit - p_dZeit;
+	double dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 
 	// Wenn Delta < 0.5 wurde bei einem Simulationsschritt von 0.5 schon aktualisiert.
 	if (dDeltaZeit >= 0.5) {
-		double dGefahreneStrecke = 0.0;
-
+		// Falls Simulation mit Parken/Fahren hier neu berechnen
 		if (p_pVerhalten) {
 			dGefahreneStrecke = p_pVerhalten->dStrecke(*this, dDeltaZeit);
-		} else {
-			dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 		}
-
-		//dGefahreneStrecke = getGeschwindigkeit() * dDeltaZeit;
 
 		p_dGesamtStrecke += dGefahreneStrecke;
 		p_dAbschnittStrecke += dGefahreneStrecke;
@@ -41,7 +37,9 @@ void Fahrrad::vSimulieren() {
 }
 
 void Fahrrad::vZeichnen(const Weg& weg) const {
-	bZeichneFahrrad(getName(), weg.getName(), getAbschnittStrecke() / weg.getLaenge(), getGeschwindigkeit());
+	double dRelPosition =  getAbschnittStrecke() / weg.getLaenge();
+	dRelPosition = std::max(0.0, std::min(1.0, dRelPosition));
+	bZeichneFahrrad(getName(), weg.getName(), dRelPosition, getGeschwindigkeit());
 }
 
 double Fahrrad::getGeschwindigkeit() const {
